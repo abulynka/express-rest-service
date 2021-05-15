@@ -2,13 +2,14 @@ const users = new Map();
 
 const getAll = async () => users;
 
-const addUser = async (user) => {
+const add = async (user) => {
   users.set(user.id, user);
+  return user;
 };
 
-const getUser = async (id) => users.get(id);
+const get = async (id) => users.get(id);
 
-const updateUser = async (id, info) => {
+const update = async (id, info) => {
   if (users.has(id)) {
     const user = users.get(id);
     user.name = info.name;
@@ -18,16 +19,15 @@ const updateUser = async (id, info) => {
     throw new Error('User not found');
   }
   return users.get(id);
-}
+};
 
-const deleteUser = async (id) => {
+const remove = async (id) => {
   if (users.has(id)) {
     const user = users.get(id);
     users.delete(id);
     return user;
-  } 
-    throw new Error('User not found');
-  
-}
+  }
+  throw new Error('User not found');
+};
 
-module.exports = { getAll, addUser, getUser, updateUser, deleteUser };
+module.exports = { getAll, add, get, update, remove };
