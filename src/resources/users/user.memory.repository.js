@@ -1,14 +1,39 @@
 const users = new Map();
 
+/**
+ * Returns all users
+ * 
+ * @returns {Map<User>} map object of users
+ */
 const getAll = async () => users;
 
+/**
+ * Adds new user
+ * 
+ * @param {User} user input user to set
+ * @returns {User} the instance of user object
+ */
 const add = async (user) => {
   users.set(user.id, user);
   return user;
 };
 
+/**
+ * Returns user object by id
+ * 
+ * @param {string} id user identifier
+ * @returns {User} found user
+ */
 const get = async (id) => users.get(id);
 
+/**
+ * Updates user
+ * 
+ * @param {string} id user identifier
+ * @param {object} info new user info
+ * @returns {User} updated user object
+ * @throws {Error} user id not found
+ */
 const update = async (id, info) => {
   if (users.has(id)) {
     const user = users.get(id);
@@ -21,6 +46,13 @@ const update = async (id, info) => {
   return users.get(id);
 };
 
+/**
+ * Removes user
+ * 
+ * @param {string} id search id
+ * @returns {User} deleted user object
+ * @throws {Error} user not found
+ */
 const remove = async (id) => {
   if (users.has(id)) {
     const user = users.get(id);

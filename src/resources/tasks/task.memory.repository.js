@@ -1,8 +1,11 @@
 const tasks = new Map();
 
 /**
- * @param {string} boardId
- * @returns
+ * Returns all tasks
+ * 
+ * @param {string} boardId all tasks with input board id
+ * @returns {Map<Task>} all tasks by board id
+ * @throws {Error} unable to find board
  */
 const getAll = async (boardId) => {
   if (!tasks.has(boardId)) {
@@ -13,10 +16,12 @@ const getAll = async (boardId) => {
 };
 
 /**
- *
- * @param {string} boardId
- * @param {string} taskId
- * @returns
+ * Returns task by input ids
+ * 
+ * @param {string} boardId board search criteria
+ * @param {string} taskId task search criteria
+ * @returns {Task} found task
+ * @throws {Error} unable to find board of task
  */
 const get = async (boardId, taskId) => {
   if (!tasks.has(boardId)) {
@@ -30,8 +35,10 @@ const get = async (boardId, taskId) => {
 };
 
 /**
- * @param {Task} task
- * @returns
+ * Adds task
+ * 
+ * @param {Task} task new task
+ * @returns {Task} added task
  */
 const add = async (task) => {
   if (!tasks.has(task.boardId)) {
@@ -42,7 +49,10 @@ const add = async (task) => {
 };
 
 /**
- * @param {string} boardId
+ * Removes task by board id
+ * 
+ * @param {string} boardId search criteria
+ * @return {void}
  */
 const removeByBoardId = async (boardId) => {
   if (tasks.has(boardId)) {
@@ -51,8 +61,12 @@ const removeByBoardId = async (boardId) => {
 };
 
 /**
- * @param {string} boardId
- * @param {string} taskId
+ * Removes task
+ * 
+ * @param {string} boardId search critera by board
+ * @param {string} taskId search criteria by task
+ * @return {void}
+ * @throws {Error} wrong board id
  */
 const remove = async (boardId, taskId) => {
   if (!tasks.has(boardId)) {
@@ -66,11 +80,12 @@ const remove = async (boardId, taskId) => {
 };
 
 /**
- *
- * @param {string} boardId
- * @param {string} taskId
- * @param {Object} newTask
- * @returns
+ * Updates task
+ * 
+ * @param {string} boardId search criteria by board
+ * @param {string} taskId search criteria by task
+ * @param {Object} newTask new task info
+ * @returns {Task}
  */
 const update = async (boardId, taskId, newTask) => {
   const task = await get(boardId, taskId);
@@ -85,7 +100,10 @@ const update = async (boardId, taskId, newTask) => {
 };
 
 /**
- * @param {string} userId
+ * Cleans user
+ * 
+ * @param {string} userId sets task user id to null
+ * @return {void}
  */
 const cleanUser = async (userId) =>
   tasks.forEach((value, key) => {
