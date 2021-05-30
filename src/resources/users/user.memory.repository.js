@@ -3,7 +3,7 @@ const users = new Map();
 /**
  * Returns all users
  * 
- * @returns {Map<User>} map object of users
+ * @returns {Promise<Map<number, User>>} map object of users
  */
 const getAll = async () => users;
 
@@ -11,7 +11,7 @@ const getAll = async () => users;
  * Adds new user
  * 
  * @param {User} user input user to set
- * @returns {User} the instance of user object
+ * @returns {Promise<User>} the instance of user object
  */
 const add = async (user) => {
   users.set(user.id, user);
@@ -22,7 +22,7 @@ const add = async (user) => {
  * Returns user object by id
  * 
  * @param {string} id user identifier
- * @returns {User} found user
+ * @returns {Promise<User>} found user
  */
 const get = async (id) => users.get(id);
 
@@ -31,7 +31,7 @@ const get = async (id) => users.get(id);
  * 
  * @param {string} id user identifier
  * @param {object} info new user info
- * @returns {User} updated user object
+ * @returns {Promise<User>} updated user object
  * @throws {Error} user id not found
  */
 const update = async (id, info) => {
@@ -50,7 +50,7 @@ const update = async (id, info) => {
  * Removes user
  * 
  * @param {string} id search id
- * @returns {User} deleted user object
+ * @returns {Promise<User>} deleted user object
  * @throws {Error} user not found
  */
 const remove = async (id) => {
