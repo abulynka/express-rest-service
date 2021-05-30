@@ -22,6 +22,7 @@ class Board {
       return false;
     })
     if (!column) {
+      console.log(id);
       throw new Error('Unable to find column');
     }
     return column;
@@ -31,7 +32,7 @@ class Board {
     columns.forEach((columnArr) => {
       const column = new Column();
       column.title = `${columnArr['title']  }`;
-      column.order = `${columnArr['order']  }`;
+      column.order = parseInt(`${columnArr['order']  }`, 10);
       this.columns.push(column);
     });
   };
@@ -42,10 +43,10 @@ class Board {
    * @param {Board} board
    * @returns { [key: string]: string; }
    */
-  static toResponse(board: Board): { [key: string]: string | { [key: string]: string; }[]; } {
+  static toResponse(board: Board): { [key: string]: string | { [key: string]: string | number; }[]; } {
     const {id} = board;
     const {title} = board;
-    const columns: { [key: string]: string; }[] = [];
+    const columns: { [key: string]: string | number; }[] = [];
     board.columns.forEach((column) => {
       columns.push(Column.toResponse(column));
     });

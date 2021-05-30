@@ -33,14 +33,12 @@ const add = async (boardId: string, params: { [key: string]: string; }): Promise
   }
 
   const task = new Task();
-
   task.boardId = boardId;
   task.title = `${params['title']  }`;
   task.order = parseInt(`${params['order']  }`, 10);
   task.description = `${params['description']  }`;
-  task.userId = `${params['userId']  }`;
-  task.boardId = `${params['boardId']  }`;
-  task.columnId = `${params['columnId']  }`;
+  task.userId = params['userId'] || null;
+  task.columnId = params['columnId'] || null;
 
   // checks for valid ids
   if (task.boardId) {
@@ -76,9 +74,9 @@ const update = async (boardId: string, taskId: string, params: { [key: string]: 
   task.title = `${params['title']  }`;
   task.order = parseInt(`${params['order']  }`, 10);
   task.description = `${params['description']  }`;
-  task.userId = `${params['userId']  }`;
-  task.boardId = `${params['boardId']  }`;
-  task.columnId = `${params['columnId']  }`;
+  task.userId = params['userId'] || null;
+  task.boardId ??= params['boardId'] || null;
+  task.columnId ??= params['columnId'] || null;
 
   if (task.userId) {
     await userService.get(task.userId);

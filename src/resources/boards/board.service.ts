@@ -57,8 +57,15 @@ const update = async (id: string, params: { [key: string]: string; }): Promise<B
   if (params['columns'] && typeof params['columns'] === 'object') {
     columns = params['columns'];
   }
-
-  board.setColumnsFromArray(columns);
+  columns.forEach((columnArr) => {
+    try {
+      const column = board.getColumn(columnArr?.['id'] + '');
+      column.title = columnArr?.['title'] + '';
+      column.order = parseInt(columnArr?.['order'] + '');
+    } catch {
+      board.setColumnsFromArray([columnArr]);
+    }
+  });
 
   return board;
 }

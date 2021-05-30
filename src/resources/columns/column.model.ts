@@ -5,9 +5,9 @@ class Column {
 
   title: string;
 
-  order: string;
+  order: number;
 
-  constructor({ id = uuidv4(), title = 'title', order = 'order' } = {}) {
+  constructor({ id = uuidv4(), title = 'title', order = 0 } = {}) {
     this.id = id;
     this.title = title;
     this.order = order;
@@ -18,7 +18,7 @@ class Column {
    * @param {Column} column
    * @returns {{ [key: string]: string; }}
    */
-  static toResponse(column: Column): { [key: string]: string; } {
+  static toResponse(column: Column): { [key: string]: string | number; } {
     const { id, title, order } = column;
     return { id, title, order };
   };

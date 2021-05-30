@@ -10,6 +10,7 @@ const tasks: Map<string, Task[]> = new Map();
  * @throws {Error} unable to find board
  */
 const getAll = async (boardId: string): Promise<Task[]> => {
+  console.log(boardId);
   if (!tasks.has(boardId)) {
     throw new Error('Unable to find board');
   }
@@ -50,10 +51,12 @@ const get = async (boardId: string, taskId: string): Promise<Task> => {
  * @returns {Promise<Task>} added task
  */
 const add = async (task: Task): Promise<Task> => {
-  if (!tasks.has(task.boardId)) {
-    tasks.set(task.boardId, []);
+  if (task.boardId) {
+    if (!tasks.has(task.boardId)) {
+      tasks.set(task.boardId, []);
+    }
+    tasks.get(task.boardId)?.push(task);
   }
-  tasks.get(task.boardId)?.push(task);
   return task;
 };
 
@@ -64,6 +67,7 @@ const add = async (task: Task): Promise<Task> => {
  * @return {Promise<void>}
  */
 const removeByBoardId = async (boardId: string): Promise<void> => {
+  console.log(boardId);
   if (tasks.has(boardId)) {
     tasks.delete(boardId);
   }
@@ -106,9 +110,9 @@ const update = async (
      title: string,
      order: number,
      description: string,
-     userId: string,
-     columnId: string,
-     boardId: string,
+     userId: string | null,
+     columnId: string | null,
+     boardId: string | null,
    }
 ): Promise<Task> => {
   const task = await get(boardId, taskId);
@@ -132,13 +136,14 @@ const update = async (
 const cleanUser = async (userId: string): Promise<void> =>
   tasks.forEach((value, key) => {
     value.forEach((task, index) => {
+      console.log(task.userId, userId);
       if (task.userId === userId) {
         const taskIndex = tasks.get(key)?.[index];
         
         if (!taskIndex?.userId) {
           throw new Error();
         }
-        taskIndex.userId = '';
+        taskIndex.userId = null;
       }
     });
   });

@@ -9,20 +9,20 @@ class Task {
 
   description: string;
 
-  userId: string;
+  userId: string | null;
 
-  boardId: string;
+  boardId: string | null;
 
-  columnId: string;
+  columnId: string | null;
 
   constructor({
     id = uuidv4(),
     title = '',
     order = 0,
     description = '',
-    userId = '',
-    boardId = '',
-    columnId = '',
+    userId = null,
+    boardId = null,
+    columnId = null,
   } = {}) {
     this.id = id
     this.title = title
@@ -34,7 +34,7 @@ class Task {
   }
 
   static toResponse(task: Task) {
-    const { id, title, order, description, userId, boardId, columnId } = task;
+    let { id, title, order, description, userId, boardId, columnId } = task;
     return { id, title, order, description, userId, boardId, columnId };
   }
 }

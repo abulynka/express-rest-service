@@ -17,7 +17,7 @@ router.route('/').get(async (req: express.Request, res: express.Response) => {
     if (!req) {
       // just for linter and ts compiler
     }
-    const result: { [key: string]: string | { [key: string]: string; }[]; }[] = [];
+    const result: { [key: string]: string | { [key: string]: string | number; }[]; }[] = [];
     (await boardsService.getAll()).forEach((board) => {
       result.push(Board.toResponse(board));
     });
