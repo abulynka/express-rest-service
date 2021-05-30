@@ -81,9 +81,9 @@ const update = async (boardId: string, taskId: string, params: { [key: string]: 
   task.columnId = `${params['columnId']  }`;
 
   if (task.userId) {
-    userService.get(task.userId);
+    await userService.get(task.userId);
   }
-  tasksRepo.update(boardId, taskId, task);
+  await tasksRepo.update(boardId, taskId, task);
   return task;
 }
 

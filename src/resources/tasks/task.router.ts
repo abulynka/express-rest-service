@@ -19,82 +19,52 @@ const getTaskId = (params: { [key: string]: string; }): string => {
     throw new Error();
 };
 
-router.route('/:boardId/tasks').get((req: express.Request, res: express.Response) => {
+router.route('/:boardId/tasks').get(async (req: express.Request, res: express.Response) => {
   try {
-    tasksService
-    .getAll(getBoardId(req.params))
-    .then((tasks) => {
-      const results: object[] = [];
-      tasks.forEach((task) => {
-        results.push(Task.toResponse(task));
-      });
-      res.status(httpCodes.OK).json(results);
-    })
-    .catch(() => {
-      res.status(httpCodes.BAD_REQUEST).send();
+    const tasks = await tasksService.getAll(getBoardId(req.params));
+    const results: object[] = [];
+    tasks.forEach((task) => {
+      results.push(Task.toResponse(task));
     });
+    res.status(httpCodes.OK).json(results);
   } catch {
-    res.status(httpCodes.INTERNAL_SERVER_ERROR).send();
+    res.status(httpCodes.BAD_REQUEST).send();
   }
 });
 
-router.route('/:boardId/tasks').post((req: express.Request, res: express.Response) => {
+router.route('/:boardId/tasks').post(async (req: express.Request, res: express.Response) => {
   try {
-  tasksService
-    .add(getBoardId(req.params), req.body)
-    .then((task) => {
-      res.status(httpCodes.CREATED).json(Task.toResponse(task));
-    })
-    .catch(() => {
-      res.status(httpCodes.BAD_REQUEST).send();
-    });
+    const task = await tasksService.add(getBoardId(req.params), req.body);
+    res.status(httpCodes.CREATED).json(Task.toResponse(task));
   } catch {
-    res.status(httpCodes.INTERNAL_SERVER_ERROR).send();
+    res.status(httpCodes.BAD_REQUEST).send();
   }
 });
 
-router.route('/:boardId/tasks/:taskId').get((req: express.Request, res: express.Response) => {
+router.route('/:boardId/tasks/:taskId').get(async (req: express.Request, res: express.Response) => {
   try {
-    tasksService
-      .get(getBoardId(req.params), getTaskId(req.params))
-      .then((task) => {
-        res.status(httpCodes.OK).json(Task.toResponse(task));
-      })
-      .catch(() => {
-        res.status(httpCodes.NOT_FOUND).send();
-      })
+    const task = await tasksService.get(getBoardId(req.params), getTaskId(req.params));
+    res.status(httpCodes.OK).json(Task.toResponse(task));
   } catch {
-    res.status(httpCodes.INTERNAL_SERVER_ERROR).send();
+    res.status(httpCodes.NOT_FOUND).send();
   }
 });
 
-router.route('/:boardId/tasks/:taskId').put((req: express.Request, res: express.Response) => {
+router.route('/:boardId/tasks/:taskId').put(async (req: express.Request, res: express.Response) => {
   try {
-    tasksService
-      .update(getBoardId(req.params), getTaskId(req.params), req.body)
-      .then((task) => {
-        res.status(httpCodes.OK).json(Task.toResponse(task));
-      })
-      .catch(() => {
-        res.status(httpCodes.BAD_REQUEST).send();
-      });
+    const task = await tasksService.update(getBoardId(req.params), getTaskId(req.params), req.body);
+    res.status(httpCodes.OK).json(Task.toResponse(task));
   } catch {
-    res.status(httpCodes.INTERNAL_SERVER_ERROR).send();
+    res.status(httpCodes.BAD_REQUEST).send();
   }
 })
 
-router.route('/:boardId/tasks/:taskId').delete((req: express.Request, res: express.Response) => {
+router.route('/:boardId/tasks/:taskId').delete(async (req: express.Request, res: express.Response) => {
   try {
-    tasksService
-      .remove(getBoardId(req.params), getTaskId(req.params))
-      .then(() => {
-        res.status(httpCodes.NO_CONTENT).send();
-      })
-      .catch(() => {
-        res.status(httpCodes.NOT_FOUND).send();
-      })
+    await tasksService.remove(getBoardId(req.params), getTaskId(req.params));
+    res.status(httpCodes.NO_CONTENT).send();
   } catch {
-    res.status(httpCodes.INTERNAL_SERVER_ERROR).send();
+    res.status(httpCodes.NOT_FOUND).send();
   }
 });
 
