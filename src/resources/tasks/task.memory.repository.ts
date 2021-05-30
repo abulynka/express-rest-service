@@ -30,7 +30,6 @@ const getAll = async (boardId: string): Promise<Task[]> => {
  */
 const get = async (boardId: string, taskId: string): Promise<Task> => {
   if (!tasks.has(boardId)) {
-    console.log(boardId);
     throw new Error('Unable to find board');
   }
   const foundTasks = tasks.get(boardId);
