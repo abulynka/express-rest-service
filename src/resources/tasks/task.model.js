@@ -1,6 +1,11 @@
 const uuid = require('uuid').v4;
 
 class Task {
+  /**
+   * Constructor
+   * @param {Object} param0 input params
+   * @returns {void} nothing to return
+   */
   constructor({
     id = uuid(),
     title = '',
