@@ -9,19 +9,18 @@ const getBoardId = (params: { [key: string]: string; }): string => {
   if (params && params['boardId'] && typeof params['boardId'] === 'string') {
     return params['boardId'];
   } 
-    throw new Error('unable to find board id');
+  throw new Error('unable to find board id');
 };
 
 const getTaskId = (params: { [key: string]: string; }): string => {
   if (params && params['taskId'] && typeof params['taskId'] === 'string') {
     return params['taskId'];
   } 
-    throw new Error('unable to find task id');
+  throw new Error('unable to find task id');
 };
 
 router.route('/:boardId/tasks').get(async (req: express.Request, res: express.Response) => {
   try {
-    console.log(req.params);
     const tasks = await tasksService.getAll(getBoardId(req.params));
     const results: object[] = [];
     tasks.forEach((task) => {
@@ -38,7 +37,6 @@ router.route('/:boardId/tasks').post(async (req: express.Request, res: express.R
     const task = await tasksService.add(getBoardId(req.params), req.body);
     res.status(httpCodes.CREATED).json(Task.toResponse(task));
   } catch (e) {
-    console.log(e);
     res.status(httpCodes.BAD_REQUEST).send();
   }
 });
@@ -59,7 +57,7 @@ router.route('/:boardId/tasks/:taskId').put(async (req: express.Request, res: ex
   } catch (e) {
     res.status(httpCodes.BAD_REQUEST).send();
   }
-})
+});
 
 router.route('/:boardId/tasks/:taskId').delete(async (req: express.Request, res: express.Response) => {
   try {

@@ -59,9 +59,9 @@ const update = async (id: string, params: { [key: string]: string; }): Promise<B
   }
   columns.forEach((columnArr) => {
     try {
-      const column = board.getColumn(columnArr?.['id'] + '');
-      column.title = columnArr?.['title'] + '';
-      column.order = parseInt(columnArr?.['order'] + '');
+      const column = board.getColumn(`${columnArr?.['id']  }`);
+      column.title = `${columnArr?.['title']  }`;
+      column.order = parseInt(`${columnArr?.['order']  }`, 10);
     } catch {
       board.setColumnsFromArray([columnArr]);
     }

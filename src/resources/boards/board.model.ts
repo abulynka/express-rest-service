@@ -22,7 +22,6 @@ class Board {
       return false;
     })
     if (!column) {
-      console.log(id);
       throw new Error('Unable to find column');
     }
     return column;

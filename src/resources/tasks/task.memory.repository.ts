@@ -10,7 +10,6 @@ const tasks: Map<string, Task[]> = new Map();
  * @throws {Error} unable to find board
  */
 const getAll = async (boardId: string): Promise<Task[]> => {
-  console.log(boardId);
   if (!tasks.has(boardId)) {
     throw new Error('Unable to find board');
   }
@@ -67,7 +66,6 @@ const add = async (task: Task): Promise<Task> => {
  * @return {Promise<void>}
  */
 const removeByBoardId = async (boardId: string): Promise<void> => {
-  console.log(boardId);
   if (tasks.has(boardId)) {
     tasks.delete(boardId);
   }
@@ -136,7 +134,6 @@ const update = async (
 const cleanUser = async (userId: string): Promise<void> =>
   tasks.forEach((value, key) => {
     value.forEach((task, index) => {
-      console.log(task.userId, userId);
       if (task.userId === userId) {
         const taskIndex = tasks.get(key)?.[index];
         
