@@ -5,15 +5,15 @@ const Board = require('./board.model');
 /**
  * Returns all boards
  * 
- * @returns {Map<Board>} all boards
+ * @returns {Promise<Map<number, Board>>} all boards
  */
 const getAll = async () => boardsRepo.getAll();
 
 /**
  * Adds new board
  * 
- * @param {object} params new board params
- * @returns {Board} added board
+ * @param {Object} params new board params
+ * @returns {Promise<Board>} added board
  * @throws {Error} wrong input data
  */
 const add = async (params) => {
@@ -33,8 +33,8 @@ const add = async (params) => {
 /**
  * Returns board by input id
  * 
- * @param {string} id 
- * @returns {Board} found board
+ * @param {string} id board id
+ * @returns {Promise<Board>} found board
  */
 const get = async (id) => boardsRepo.get(id);
 
@@ -42,8 +42,8 @@ const get = async (id) => boardsRepo.get(id);
  * Updates board
  * 
  * @param {string} id board id
- * @param {object} params new params
- * @returns {Board} updated board
+ * @param {Object} params new params
+ * @returns {Promise<Board>} updated board
  */
 const update = async (id, params) => {
   const board = await boardsRepo.update(id, params);
@@ -63,7 +63,7 @@ const update = async (id, params) => {
  * Removes board by input id
  * 
  * @param {string} id board id to remove
- * @returns {void}
+ * @returns {Promise<void>} nothing to return
  */
 const remove = async (id) => {
   await tasksRepo.removeByBoardId(id);

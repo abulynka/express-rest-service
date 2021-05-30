@@ -52,7 +52,7 @@ const add = async (task) => {
  * Removes task by board id
  * 
  * @param {string} boardId search criteria
- * @return {Promise<void>}
+ * @return {Promise<void>} nothing to return
  */
 const removeByBoardId = async (boardId) => {
   if (tasks.has(boardId)) {
@@ -65,7 +65,7 @@ const removeByBoardId = async (boardId) => {
  * 
  * @param {string} boardId search critera by board
  * @param {string} taskId search criteria by task
- * @return {Promise<void>}
+ * @return {Promise<void>} nothing to return
  * @throws {Error} wrong board id
  */
 const remove = async (boardId, taskId) => {
@@ -85,7 +85,7 @@ const remove = async (boardId, taskId) => {
  * @param {string} boardId search criteria by board
  * @param {string} taskId search criteria by task
  * @param {Object} newTask new task info
- * @returns {Promise<Task>}
+ * @returns {Promise<Task>} updated task
  */
 const update = async (boardId, taskId, newTask) => {
   const task = await get(boardId, taskId);
@@ -103,7 +103,7 @@ const update = async (boardId, taskId, newTask) => {
  * Cleans user
  * 
  * @param {string} userId sets task user id to null
- * @return {Promise<void>}
+ * @return {Promise<void>} nothing to return
  */
 const cleanUser = async (userId) =>
   tasks.forEach((value, key) => {

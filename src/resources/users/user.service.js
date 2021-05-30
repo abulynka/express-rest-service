@@ -13,7 +13,7 @@ const getAll = async () => usersRepo.getAll();
  * Adds new user
  * 
  * @param {Object} params new user info
- * @returns {Promise<User>} new user
+ * @returns {Promise<User>} new added user
  * @throw {Error} wrong input data
  */
 const add = async (params) => {
@@ -35,7 +35,7 @@ const add = async (params) => {
  * Returns user by input id
  * 
  * @param {string} id user id to get
- * @returns {Promise<User>}
+ * @returns {Promise<User>} user by id
  */
 const get = async (id) => usersRepo.get(id);
 
@@ -52,6 +52,7 @@ const update = async (id, info) => usersRepo.update(id, info);
  * Removes user by input id
  * 
  * @param {Promise<string>} id user id to remove 
+ * @returns {void} nothing to return
  */
 const remove = async (id) => {
   await usersRepo.remove(id);

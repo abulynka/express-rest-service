@@ -3,7 +3,7 @@ const boards = new Map();
 /**
  * Returns all bords
  * 
- * @returns {Map<Board>} all boards
+ * @returns {Promise<Map<number, Board>>} all boards
  */
 const getAll = async () => boards;
 
@@ -11,7 +11,7 @@ const getAll = async () => boards;
  * Adds new board
  * 
  * @param {Board} board new board to add
- * @returns {Board} added board object 
+ * @returns {Promise<Board>} added board object 
  */
 const add = async (board) => {
   boards.set(board.id, board);
@@ -22,7 +22,7 @@ const add = async (board) => {
  * Returns board by input id
  * 
  * @param {string} id board to search
- * @returns {Board} found bords
+ * @returns {Promise<Board>} found bords
  * @throws {Error} unknown id
  */
 const get = async (id) => {
@@ -36,8 +36,8 @@ const get = async (id) => {
  * Updates board by input id
  * 
  * @param {string} id input id to update 
- * @param {object} params new board params
- * @returns {Board} updated board
+ * @param {Object} params new board params
+ * @returns {Promise<Board>} updated board
  * @throws {Error} unknown board
  */
 const update = async (id, params) => {
@@ -54,7 +54,7 @@ const update = async (id, params) => {
  * Removes board by input id
  * 
  * @param {string} id board id to remove
- * @return {void}
+ * @return {Promise<void>} nothing to return
  */
 const remove = async (id) => {
   if (!boards.has(id)) {
