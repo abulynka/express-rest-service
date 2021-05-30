@@ -7,7 +7,7 @@ const userService = require('../users/user.service');
  * Returns all tasks
  * 
  * @param {string} boardId search criteria by board id
- * @returns {Task}
+ * @returns {Promise<Map<number, Task>>}
  */
 const getAll = async (boardId) => tasksRepo.getAll(boardId);
 
@@ -16,7 +16,7 @@ const getAll = async (boardId) => tasksRepo.getAll(boardId);
  * 
  * @param {string} boardId search criteria board id
  * @param {string} taskId search criteria task id
- * @returns {Task} found task
+ * @returns {Promise<Task>} found task
  */
 const get = async (boardId, taskId) => tasksRepo.get(boardId, taskId);
 
@@ -25,7 +25,7 @@ const get = async (boardId, taskId) => tasksRepo.get(boardId, taskId);
  * 
  * @param {string} boardId board id for task
  * @param {object} params new task params
- * @returns {Task} added task
+ * @returns {Promise<Task>} added task
  */
 const add = async (boardId, params) => {
   if (!params) {
@@ -70,8 +70,8 @@ const add = async (boardId, params) => {
  * 
  * @param {string} boardId search criteria by board id
  * @param {string} taskId search criteria by task id
- * @param {object} params new info for task
- * @returns {Task} updated task
+ * @param {Object} params new info for task
+ * @returns {Promise<Task>} updated task
  */
 const update = async (boardId, taskId, params) => {
   if (!params) {
@@ -113,7 +113,7 @@ const update = async (boardId, taskId, params) => {
  * 
  * @param {string} boardId search criteria by board id
  * @param {string} taskId search criteria by task id
- * @returns {void}
+ * @returns {Promise<void>}
  */
 const remove = async (boardId, taskId) => tasksRepo.remove(boardId, taskId);
 
@@ -122,7 +122,7 @@ const remove = async (boardId, taskId) => tasksRepo.remove(boardId, taskId);
  * 
  * @param {string} boardId search criteria by board id
  * @param {string} taskId search criteria by task id
- * @returns {void}
+ * @returns {Promise<void>}
  */
 const cleanUser = async (boardId, taskId) =>
   tasksRepo.cleanUser(boardId, taskId);

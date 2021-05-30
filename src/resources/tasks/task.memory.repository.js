@@ -4,7 +4,7 @@ const tasks = new Map();
  * Returns all tasks
  * 
  * @param {string} boardId all tasks with input board id
- * @returns {Map<Task>} all tasks by board id
+ * @returns {Promise<Map<number,Task>>} all tasks by board id
  * @throws {Error} unable to find board
  */
 const getAll = async (boardId) => {
@@ -20,7 +20,7 @@ const getAll = async (boardId) => {
  * 
  * @param {string} boardId board search criteria
  * @param {string} taskId task search criteria
- * @returns {Task} found task
+ * @returns {Promise<Task>} found task
  * @throws {Error} unable to find board of task
  */
 const get = async (boardId, taskId) => {
@@ -38,7 +38,7 @@ const get = async (boardId, taskId) => {
  * Adds task
  * 
  * @param {Task} task new task
- * @returns {Task} added task
+ * @returns {Promise<Task>} added task
  */
 const add = async (task) => {
   if (!tasks.has(task.boardId)) {
@@ -52,7 +52,7 @@ const add = async (task) => {
  * Removes task by board id
  * 
  * @param {string} boardId search criteria
- * @return {void}
+ * @return {Promise<void>}
  */
 const removeByBoardId = async (boardId) => {
   if (tasks.has(boardId)) {
@@ -65,7 +65,7 @@ const removeByBoardId = async (boardId) => {
  * 
  * @param {string} boardId search critera by board
  * @param {string} taskId search criteria by task
- * @return {void}
+ * @return {Promise<void>}
  * @throws {Error} wrong board id
  */
 const remove = async (boardId, taskId) => {
@@ -85,7 +85,7 @@ const remove = async (boardId, taskId) => {
  * @param {string} boardId search criteria by board
  * @param {string} taskId search criteria by task
  * @param {Object} newTask new task info
- * @returns {Task}
+ * @returns {Promise<Task>}
  */
 const update = async (boardId, taskId, newTask) => {
   const task = await get(boardId, taskId);
@@ -103,7 +103,7 @@ const update = async (boardId, taskId, newTask) => {
  * Cleans user
  * 
  * @param {string} userId sets task user id to null
- * @return {void}
+ * @return {Promise<void>}
  */
 const cleanUser = async (userId) =>
   tasks.forEach((value, key) => {
