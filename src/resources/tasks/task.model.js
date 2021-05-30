@@ -24,6 +24,11 @@ class Task {
     this.columnId = columnId;
   }
 
+  /**
+   * Converts input task to object
+   * @param {Task} task input task 
+   * @returns {Object} converted task
+   */
   static toResponse(task) {
     const { id, title, order, description, userId, boardId, columnId } = task;
     return { id, title, order, description, userId, boardId, columnId };

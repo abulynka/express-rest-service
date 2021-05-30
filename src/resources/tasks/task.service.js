@@ -5,7 +5,6 @@ const userService = require('../users/user.service');
 
 /**
  * Returns all tasks
- * 
  * @param {string} boardId search criteria by board id
  * @returns {Promise<Map<number, Task>>}
  */
@@ -13,7 +12,6 @@ const getAll = async (boardId) => tasksRepo.getAll(boardId);
 
 /**
  * Returns task by search criterias
- * 
  * @param {string} boardId search criteria board id
  * @param {string} taskId search criteria task id
  * @returns {Promise<Task>} found task
@@ -22,7 +20,6 @@ const get = async (boardId, taskId) => tasksRepo.get(boardId, taskId);
 
 /**
  * Adds new task
- * 
  * @param {string} boardId board id for task
  * @param {object} params new task params
  * @returns {Promise<Task>} added task
@@ -67,7 +64,6 @@ const add = async (boardId, params) => {
 
 /**
  * Updates task
- * 
  * @param {string} boardId search criteria by board id
  * @param {string} taskId search criteria by task id
  * @param {Object} params new info for task
@@ -110,7 +106,6 @@ const update = async (boardId, taskId, params) => {
 
 /**
  * Removes task
- * 
  * @param {string} boardId search criteria by board id
  * @param {string} taskId search criteria by task id
  * @returns {Promise<void>}
@@ -119,7 +114,6 @@ const remove = async (boardId, taskId) => tasksRepo.remove(boardId, taskId);
 
 /**
  * Cleans user
- * 
  * @param {string} boardId search criteria by board id
  * @param {string} taskId search criteria by task id
  * @returns {Promise<void>}
