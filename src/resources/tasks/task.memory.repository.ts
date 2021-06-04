@@ -1,4 +1,5 @@
 import Task from './task.model';
+import { Exception } from '../../middleware/exception';
 
 const tasks: Map<string, Task[]> = new Map();
 
@@ -7,15 +8,15 @@ const tasks: Map<string, Task[]> = new Map();
  * 
  * @param {string} boardId all tasks with input board id
  * @returns { Promise<Task[]>} all tasks by board id
- * @throws {Error} unable to find board
+ * @throws {Exception} unable to find board
  */
 const getAll = async (boardId: string): Promise<Task[]> => {
   if (!tasks.has(boardId)) {
-    throw new Error('Unable to find board');
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'unable to find board');
   }
   const foundTasks = tasks.get(boardId);
   if (!foundTasks) {
-    throw new Error('Unable to find board');
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'unable to find task');
   }
   return foundTasks;
 };
@@ -26,20 +27,23 @@ const getAll = async (boardId: string): Promise<Task[]> => {
  * @param {string} boardId board search criteria
  * @param {string} taskId task search criteria
  * @returns {Promise<Task>} found task
- * @throws {Error} unable to find board of task
+ * @throws {Exception} unable to find board of task
  */
 const get = async (boardId: string, taskId: string): Promise<Task> => {
   if (!tasks.has(boardId)) {
-    throw new Error('Unable to find board');
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'unable to find board');
   }
+
   const foundTasks = tasks.get(boardId);
   if (!foundTasks) {
-    throw new Error('Unable to find board');
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'unable to find task');
   }
+
   const result = foundTasks.find((task: Task) => task.id === taskId);
   if (!result) {
-    throw new Error(`Wrong task id ${taskId}`);
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'unable to find task');
   }
+
   return result;
 };
 
@@ -77,16 +81,18 @@ const removeByBoardId = async (boardId: string): Promise<void> => {
  * @param {string} boardId search critera by board
  * @param {string} taskId search criteria by task
  * @return {Promise<void>}
- * @throws {Error} wrong board id
+ * @throws {Exception} wrong board id
  */
 const remove = async (boardId: string, taskId: string): Promise<void> => {
   if (!tasks.has(boardId)) {
-    throw new Error('Wrong board id');
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'unable to find board id');
   }
+
   const foundTasks = tasks.get(boardId);
   if (!foundTasks) {
-    throw new Error();
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'unable to find task');
   }
+
   const tasksToSet = foundTasks.filter(task => task.id !== taskId);
   if (tasksToSet) {
     tasks.set(boardId, tasksToSet);
@@ -138,7 +144,7 @@ const cleanUser = async (userId: string): Promise<void> =>
         const taskIndex = tasks.get(key)?.[index];
         
         if (!taskIndex?.userId) {
-          throw new Error();
+          throw new Exception(Exception.STATUS_NOT_FOUND, 'unable to find user');
         }
         taskIndex.userId = null;
       }

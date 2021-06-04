@@ -2,6 +2,7 @@ import tasksRepo from './task.memory.repository';
 import Task from './task.model';
 import boardService from '../boards/board.service';
 import userService from '../users/user.service';
+import { Exception } from '../../middleware/exception';
 
 /**
  * Returns all tasks
@@ -29,7 +30,7 @@ const get = async (boardId: string, taskId: string): Promise<Task> => tasksRepo.
  */
 const add = async (boardId: string, params: { [key: string]: string; }): Promise<Task> => {
   if (!params) {
-    throw new Error('Wrong input params');
+    throw new Exception(Exception.STATUS_BAD_REQUEST, 'wrong input params');
   }
 
   const task = new Task();
@@ -66,14 +67,14 @@ const add = async (boardId: string, params: { [key: string]: string; }): Promise
  */
 const update = async (boardId: string, taskId: string, params: { [key: string]: string; }): Promise<Task> => {
   if (!params) {
-    throw new Error('Wrong input params');
+    throw new Exception(Exception.STATUS_BAD_REQUEST, 'wrong input params');
   }
 
   const task = new Task();
   task.boardId = boardId;
   task.title = `${params['title']  }`;
   task.order = parseInt(`${params['order']  }`, 10);
-  task.description = `${params['description']  }`;
+  task.description = `${params['description']  }`;``
   task.userId = params['userId'] || null;
   task.boardId ??= params['boardId'] || null;
   task.columnId ??= params['columnId'] || null;
@@ -92,6 +93,6 @@ const update = async (boardId: string, taskId: string, params: { [key: string]: 
  * @param {string} taskId search criteria by task id
  * @returns {Promise<void>}
  */
-const remove = async (boardId: string, taskId: string): Promise<void> => tasksRepo.remove(boardId, taskId);
+const remove = async (boardId: string, taskId: string): Promise<void> => await tasksRepo.remove(boardId, taskId);
 
 export default { getAll, get, add, update, remove };
