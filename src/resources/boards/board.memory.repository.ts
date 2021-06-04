@@ -1,4 +1,5 @@
 import Board from './board.model';
+import { Exception } from '../../middleware/exception';
 
 const boards = new Map();
 
@@ -22,11 +23,11 @@ const add = async (board: Board): Promise<Board> => {
  * Returns board by input id
  * @param {string} id board to search
  * @returns {Promise<Board>} found bords
- * @throws {Error} unknown id
+ * @throws {Exception} unknown id
  */
 const get = async (id: string): Promise<Board> => {
   if (!boards.has(id)) {
-    throw new Error('Unknown id');
+    throw new Exception(Exception.STATUS_NOT_FOUND, `unknown border id ${id }`);
   }
   return boards.get(id);
 };
@@ -36,11 +37,11 @@ const get = async (id: string): Promise<Board> => {
  * @param {string} id input id to update 
  * @param {Object} params new board params
  * @returns {Promise<Board>} updated board
- * @throws {Error} unknown board
+ * @throws {Exception} unknown board
  */
 const update = async (id: string, params: { [key: string]: string; }): Promise<Board> => {
   if (!boards.has(id)) {
-    throw new Error('Unknown board');
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'unknown board id');
   }
 
   const board = boards.get(id);
@@ -55,7 +56,7 @@ const update = async (id: string, params: { [key: string]: string; }): Promise<B
  */
 const remove = async (id: string): Promise<void> => {
   if (!boards.has(id)) {
-    throw new Error('Unable to find board');
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'unknown board id');
   }
 
   boards.delete(id);
