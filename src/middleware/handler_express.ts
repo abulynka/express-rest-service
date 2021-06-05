@@ -16,7 +16,7 @@ export class HandlerExpress {
             + '] ' + JSON.stringify(req.params)
             + ' ' + JSON.stringify(req.body);
     
-            Logger.singleton().log(message);
+            Logger.singleton().log(message, Logger.LOG_EXPRESS_SUCCESS);
         });
         next();
     }

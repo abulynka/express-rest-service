@@ -21,48 +21,48 @@ router.route('/').get(async (_req: express.Request, res: express.Response, next:
       result.push(Board.toResponse(board));
     });
     res.status(httpCodes.OK).json(result);
+    next();
   } catch (e) {
     next(e);
   }
-  next();
 });
 
 router.route('/').post(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     const board = await boardsService.add(req.body);
     res.status(httpCodes.CREATED).json(Board.toResponse(board));
+    next();
   } catch (e) {
     next(e);
   }
-  next();
 });
 
 router.route('/:id').get(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     res.status(httpCodes.OK).json(Board.toResponse((await boardsService.get(getId(req.params)))));
+    next();
   } catch (e) {
     next(e);
   }
-  next();
 });
 
 router.route('/:id').put(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     res.status(httpCodes.OK).json(Board.toResponse((await boardsService.update(getId(req.params), req.body))));
+    next();
   } catch (e) {
     next(e);
   }
-  next();
 });
 
 router.route('/:id').delete(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     await boardsService.remove(getId(req.params));
     res.status(httpCodes.NO_CONTENT).send();
-  } catch (error) {
-    next(error);
+    next();
+  } catch (e) {
+    next(e);
   }
-  next();
 });
 
 export default router;

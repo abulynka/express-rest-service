@@ -28,50 +28,50 @@ router.route('/:boardId/tasks').get(async (req: express.Request, res: express.Re
       results.push(Task.toResponse(task));
     });
     res.status(httpCodes.OK).json(results);
+    next();
   } catch (e) {
     next(e);
   }
-  next();
 });
 
 router.route('/:boardId/tasks').post(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     const task = await tasksService.add(getBoardId(req.params), req.body);
     res.status(httpCodes.CREATED).json(Task.toResponse(task));
+    next();
   } catch (e) {
     next(e);
   }
-  next();
 });
 
 router.route('/:boardId/tasks/:taskId').get(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     const task = await tasksService.get(getBoardId(req.params), getTaskId(req.params));
     res.status(httpCodes.OK).json(Task.toResponse(task));
+    next();
   } catch (e) {
     next(e);
   }
-  next();
 });
 
 router.route('/:boardId/tasks/:taskId').put(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     const task = await tasksService.update(getBoardId(req.params), getTaskId(req.params), req.body);
     res.status(httpCodes.OK).json(Task.toResponse(task));
+    next();
   } catch (e) {
     next(e);
   }
-  next();
 });
 
 router.route('/:boardId/tasks/:taskId').delete(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     await tasksService.remove(getBoardId(req.params), getTaskId(req.params));
     res.status(httpCodes.NO_CONTENT).send();
+    next();
   } catch (e) {
     next(e);
   }
-  next();
 });
 
 export default router;
