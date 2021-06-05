@@ -15,19 +15,25 @@ const getId = (params: { [key: string]: string; }): string => {
 }
 
 router.route('/').get(async (_req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const result: { [key: string]: string | { [key: string]: string | number; }[]; }[] = [];
-  (await boardsService.getAll()).forEach((board) => {
-    result.push(Board.toResponse(board));
-  });
-  res.status(httpCodes.OK).json(result);
-
+  try {
+    const result: { [key: string]: string | { [key: string]: string | number; }[]; }[] = [];
+    (await boardsService.getAll()).forEach((board) => {
+      result.push(Board.toResponse(board));
+    });
+    res.status(httpCodes.OK).json(result);
+  } catch (e) {
+    next(e);
+  }
   next();
 });
 
 router.route('/').post(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const board = await boardsService.add(req.body);
-  res.status(httpCodes.CREATED).json(Board.toResponse(board));
-
+  try {
+    const board = await boardsService.add(req.body);
+    res.status(httpCodes.CREATED).json(Board.toResponse(board));
+  } catch (e) {
+    next(e);
+  }
   next();
 });
 
@@ -37,24 +43,25 @@ router.route('/:id').get(async (req: express.Request, res: express.Response, nex
   } catch (e) {
     next(e);
   }
-
   next();
 });
 
 router.route('/:id').put(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  res.status(httpCodes.OK).json(Board.toResponse((await boardsService.update(getId(req.params), req.body))));
-
+  try {
+    res.status(httpCodes.OK).json(Board.toResponse((await boardsService.update(getId(req.params), req.body))));
+  } catch (e) {
+    next(e);
+  }
   next();
 });
 
 router.route('/:id').delete(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
-    await boardsService.remove(await getId(req.params));
+    await boardsService.remove(getId(req.params));
     res.status(httpCodes.NO_CONTENT).send();
   } catch (error) {
     next(error);
   }
-
   next();
 });
 

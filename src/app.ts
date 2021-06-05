@@ -17,6 +17,9 @@ const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(express.json());
 
+app.use(new ErrorHandlerExpress().process);
+app.use('/', new HandlerExpress().process);
+
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use('/', (req, res, next) => {
@@ -29,14 +32,5 @@ app.use('/', (req, res, next) => {
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 app.use('/boards', taskRouter);
-
-// app.use('/doc', (req: express.Request, _res: express.Response, next: express.NextFunction) => {
-//   swaggerDocument.host = req.get('host');
-//   Object.assign(req, {swaggerDoc: swaggerDocument});
-//   next();
-// }, swaggerUI.serve, swaggerUI.setup());
-
-app.use(new ErrorHandlerExpress().process);
-app.use('/', new HandlerExpress().process);
 
 export default app;

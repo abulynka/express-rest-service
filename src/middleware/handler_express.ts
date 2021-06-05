@@ -9,14 +9,15 @@ export class HandlerExpress {
      * @param next {express.NextFunction} next function to call
      */
     public process(req: express.Request, res: express.Response, next: express.NextFunction) {
-        const message = '[' + new Date().toISOString()
-        + '] "' + req.url
-        + '" [' + res.statusCode.toString()
-        + '] ' + JSON.stringify(req.params)
-        + ' ' + JSON.stringify(req.body);
-
-        Logger.singleton().log(message);
-
+        res.on('finish', () => {
+            const message = '[' + new Date().toISOString()
+            + '] "' + req.url
+            + '" [' + res.statusCode.toString()
+            + '] ' + JSON.stringify(req.params)
+            + ' ' + JSON.stringify(req.body);
+    
+            Logger.singleton().log(message);
+        });
         next();
     }
-}   
+}

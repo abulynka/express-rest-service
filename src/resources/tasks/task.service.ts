@@ -10,7 +10,7 @@ import { Exception } from '../../middleware/exception';
  * @param {string} boardId search criteria by board id
  * @returns {Promise<Task[]>}
  */
-const getAll = async (boardId: string): Promise<Task[]> => tasksRepo.getAll(boardId);
+const getAll = async (boardId: string): Promise<Task[]> => await tasksRepo.getAll(boardId);
 
 /**
  * Returns task by search criterias
@@ -19,7 +19,7 @@ const getAll = async (boardId: string): Promise<Task[]> => tasksRepo.getAll(boar
  * @param {string} taskId search criteria task id
  * @returns {Promise<Task>} found task
  */
-const get = async (boardId: string, taskId: string): Promise<Task> => tasksRepo.get(boardId, taskId);
+const get = async (boardId: string, taskId: string): Promise<Task> => await tasksRepo.get(boardId, taskId);
 
 /**
  * Adds new task

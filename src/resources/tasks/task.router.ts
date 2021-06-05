@@ -21,20 +21,26 @@ const getTaskId = (params: { [key: string]: string; }): string => {
 };
 
 router.route('/:boardId/tasks').get(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const tasks = await tasksService.getAll(getBoardId(req.params));
-  const results: object[] = [];
-  tasks.forEach((task) => {
-    results.push(Task.toResponse(task));
-  });
-  res.status(httpCodes.OK).json(results);
-
+  try {
+    const tasks = await tasksService.getAll(getBoardId(req.params));
+    const results: object[] = [];
+    tasks.forEach((task) => {
+      results.push(Task.toResponse(task));
+    });
+    res.status(httpCodes.OK).json(results);
+  } catch (e) {
+    next(e);
+  }
   next();
 });
 
 router.route('/:boardId/tasks').post(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const task = await tasksService.add(getBoardId(req.params), req.body);
-  res.status(httpCodes.CREATED).json(Task.toResponse(task));
-
+  try {
+    const task = await tasksService.add(getBoardId(req.params), req.body);
+    res.status(httpCodes.CREATED).json(Task.toResponse(task));
+  } catch (e) {
+    next(e);
+  }
   next();
 });
 
@@ -45,21 +51,26 @@ router.route('/:boardId/tasks/:taskId').get(async (req: express.Request, res: ex
   } catch (e) {
     next(e);
   }
-
   next();
 });
 
 router.route('/:boardId/tasks/:taskId').put(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const task = await tasksService.update(getBoardId(req.params), getTaskId(req.params), req.body);
-  res.status(httpCodes.OK).json(Task.toResponse(task));
-
+  try {
+    const task = await tasksService.update(getBoardId(req.params), getTaskId(req.params), req.body);
+    res.status(httpCodes.OK).json(Task.toResponse(task));
+  } catch (e) {
+    next(e);
+  }
   next();
 });
 
 router.route('/:boardId/tasks/:taskId').delete(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  await tasksService.remove(getBoardId(req.params), getTaskId(req.params));
-  res.status(httpCodes.NO_CONTENT).send();
-
+  try {
+    await tasksService.remove(getBoardId(req.params), getTaskId(req.params));
+    res.status(httpCodes.NO_CONTENT).send();
+  } catch (e) {
+    next(e);
+  }
   next();
 });
 
