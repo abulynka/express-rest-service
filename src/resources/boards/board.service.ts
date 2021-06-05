@@ -8,7 +8,7 @@ import { Exception } from '../../middleware/exception';
  * 
  * @returns {Promise<Map<number, Board>>} all boards
  */
-const getAll = async (): Promise<Map<number, Board>> => await boardsRepo.getAll();
+const getAll = async (): Promise<Map<number, Board>> => boardsRepo.getAll();
 
 /**
  * Adds new board
@@ -42,7 +42,7 @@ const add = async (params: { [key: string]: string; } ): Promise<Board> => {
  * @param {string} id 
  * @returns {Promise<Board>} found board
  */
-const get = async (id: string): Promise<Board> => await boardsRepo.get(id);
+const get = async (id: string): Promise<Board> => boardsRepo.get(id);
 
 /**
  * Updates board

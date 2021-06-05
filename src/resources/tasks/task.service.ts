@@ -10,7 +10,7 @@ import { Exception } from '../../middleware/exception';
  * @param {string} boardId search criteria by board id
  * @returns {Promise<Task[]>}
  */
-const getAll = async (boardId: string): Promise<Task[]> => await tasksRepo.getAll(boardId);
+const getAll = async (boardId: string): Promise<Task[]> => tasksRepo.getAll(boardId);
 
 /**
  * Returns task by search criterias
@@ -19,7 +19,7 @@ const getAll = async (boardId: string): Promise<Task[]> => await tasksRepo.getAl
  * @param {string} taskId search criteria task id
  * @returns {Promise<Task>} found task
  */
-const get = async (boardId: string, taskId: string): Promise<Task> => await tasksRepo.get(boardId, taskId);
+const get = async (boardId: string, taskId: string): Promise<Task> => tasksRepo.get(boardId, taskId);
 
 /**
  * Adds new task
@@ -74,7 +74,7 @@ const update = async (boardId: string, taskId: string, params: { [key: string]: 
   task.boardId = boardId;
   task.title = `${params['title']  }`;
   task.order = parseInt(`${params['order']  }`, 10);
-  task.description = `${params['description']  }`;``
+  task.description = `${params['description']  }`;
   task.userId = params['userId'] || null;
   task.boardId ??= params['boardId'] || null;
   task.columnId ??= params['columnId'] || null;
@@ -93,6 +93,6 @@ const update = async (boardId: string, taskId: string, params: { [key: string]: 
  * @param {string} taskId search criteria by task id
  * @returns {Promise<void>}
  */
-const remove = async (boardId: string, taskId: string): Promise<void> => await tasksRepo.remove(boardId, taskId);
+const remove = async (boardId: string, taskId: string): Promise<void> => tasksRepo.remove(boardId, taskId);
 
 export default { getAll, get, add, update, remove };

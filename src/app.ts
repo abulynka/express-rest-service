@@ -9,7 +9,7 @@ import { HandlerExpress } from './middleware/handler_express';
 import { ErrorHandler } from './middleware/error_handler';
 import { ErrorHandlerExpress } from './middleware/error_handler_express';
 
-new ErrorHandler().init();
+ErrorHandler.init();
 
 const app = express();
 
@@ -31,7 +31,7 @@ app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 app.use('/boards', taskRouter);
 
-app.use(new ErrorHandlerExpress().process);
-app.use('/', new HandlerExpress().process);
+app.use(ErrorHandlerExpress.process);
+app.use('/', HandlerExpress.process);
 
 export default app;
