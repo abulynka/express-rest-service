@@ -16,8 +16,6 @@ export class ErrorHandler {
         process.on('unhandledRejection', async (reason, promise) => {
             await Logger.singleton().log(
                 `[${  new Date().toISOString()  }] ${  reason?.toString()  } ${  promise.toString()}`, Logger.LOG_ERROR, true);
-
-            process.exit(ErrorHandler._getErrorExitCode());
         });
     }
 }

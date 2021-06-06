@@ -8,8 +8,8 @@ export class HandlerExpress {
      * @param res {express.Response} express response
      * @param next {express.NextFunction} next function to call
      */
-    public static process(req: express.Request, res: express.Response, next: express.NextFunction) {
-        res.on('finish', () => {
+    public static async process(req: express.Request, res: express.Response, next: express.NextFunction) {
+        res.on('finish', async () => {
             const message = `[${  new Date().toISOString()
              }] "${  req.url
              }" [${  res.statusCode.toString()
@@ -17,7 +17,7 @@ export class HandlerExpress {
              } - ${  JSON.stringify(req.params || '')
              } - ${  JSON.stringify(req.body)}`;
     
-            Logger.singleton().log(message, Logger.LOG_EXPRESS_SUCCESS);
+            await Logger.singleton().log(message, Logger.LOG_EXPRESS_SUCCESS);
         });
         next();
     }

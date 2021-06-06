@@ -9,7 +9,7 @@ export class ErrorHandlerExpress {
      * @param res {Response} express response
      * @param next {NextFunction} next function to call
      */
-    public static process(err: Exception, req: Request, res: Response, next: NextFunction) {
+    public static async process(err: Exception, req: Request, res: Response, next: NextFunction) {
         const {status} = err;
         const message = err.message || 'unknown error';
 
@@ -22,7 +22,7 @@ export class ErrorHandlerExpress {
              } ${  JSON.stringify(req.body)
              } ${  message}`;
 
-        Logger.singleton().log(logMessage, Logger.LOG_EXPRESS_ERROR);
+        await Logger.singleton().log(logMessage, Logger.LOG_EXPRESS_ERROR);
 
         next();
     }

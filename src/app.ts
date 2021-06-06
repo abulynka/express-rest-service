@@ -13,6 +13,8 @@ ErrorHandler.init();
 
 const app = express();
 
+app.use('/', HandlerExpress.process);
+
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(express.json());
@@ -32,6 +34,5 @@ app.use('/boards', boardRouter);
 app.use('/boards', taskRouter);
 
 app.use(ErrorHandlerExpress.process);
-app.use('/', HandlerExpress.process);
 
 export default app;
