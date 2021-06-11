@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+    express:
+        build:
+            dockerfile: docker/express/Dockerfile
+            context: .
+        depends_on:
+            postgres
+        ports:
+            - ${DOCKER_EXPRESS_PORT}:${DOCKER_EXPRESS_PORT}
+
+
+    postgres:
+        build:
+            dockerfile: docker/postgres/Dockerfile
+            context: .
+        ports:
+            - ${DOCKER_POSTGRES_PORT}:${DOCKER_POSTGRES_PORT}
