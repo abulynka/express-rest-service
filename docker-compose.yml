@@ -7,7 +7,7 @@ services:
         depends_on:
             - postgres
         ports:
-            - ${PORT}:4000
+            - ${PORT}:${PORT}
         volumes:
             - ${EXPRESS_DIR_SRC}:/usr/app/src
             - ${EXPRESS_DIR_TEST}:/usr/app/test
@@ -21,7 +21,7 @@ services:
             dockerfile: docker/postgres/Dockerfile
             context: .
         ports:
-            - ${PG_PORT}:5432
+            - ${PG_PORT}:${PG_PORT}
         environment:
             POSTGRES_USER: ${PG_USER}
             POSTGRES_PASSWORD: ${PG_PASS}
