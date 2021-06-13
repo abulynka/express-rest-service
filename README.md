@@ -87,3 +87,10 @@ docker push abulynka/express-rest-service_express
 docker tag express-rest-service_postgres abulynka/express-rest-service_postgres
 docker push abulynka/express-rest-service_postgres
 ```
+
+### Images on docker hub
+Images on docker hub:
+```
+docker pull abulynka/express-rest-service_postgres
+docker pull abulynka/express-rest-service_express
+```
