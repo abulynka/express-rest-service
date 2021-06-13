@@ -46,6 +46,12 @@ export class Logger {
         this._logTo = logTo;
     }
 
+    public constructor() {
+        if (!fs.existsSync('logs')){
+            fs.mkdirSync('logs');
+        }
+    }
+
     public async log(message: string, logLevel: number = Logger.LOG_EXPRESS_SUCCESS, waitForWrite = false) {
         if (this._logTo === Logger.LOG_TO_STDOUT || this._logTo === Logger.LOG_TO_STDOUT_FILE) {
             process.stdout.write(`[${  Logger._getPrefix(logLevel)  }] - ${  message  }${EOL}`);
@@ -55,6 +61,7 @@ export class Logger {
             const oStream = fs.createWriteStream(Logger._getFileName(logLevel), {
             highWaterMark: 4096,
             flags: "a",
+            mode: 0o777,
             });
 
             oStream.write(message + EOL);
