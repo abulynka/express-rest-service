@@ -1,19 +1,42 @@
-version: '3'
+version: '3.5'
 services:
-
     express:
         build:
             dockerfile: docker/express/Dockerfile
             context: .
         depends_on:
-            postgres
+            - postgres
         ports:
-            - ${DOCKER_EXPRESS_PORT}:${DOCKER_EXPRESS_PORT}
-
-
+            - ${PORT}:4000
+        volumes:
+            - ${EXPRESS_DIR_SRC}:/usr/app/src
+            - ${EXPRESS_DIR_TEST}:/usr/app/test
+            - ${EXPRESS_DIR_LOGS}:/usr/app/logs
+            - ${EXPRESS_DIR_DOC}:/usr/app/doc
+        networks:
+            - custom-network
+        restart: always
     postgres:
         build:
             dockerfile: docker/postgres/Dockerfile
             context: .
         ports:
-            - ${DOCKER_POSTGRES_PORT}:${DOCKER_POSTGRES_PORT}
+            - ${PG_PORT}:5432
+        environment:
+            POSTGRES_USER: ${PG_USER}
+            POSTGRES_PASSWORD: ${PG_PASS}
+            POSTGRES_DB: ${PG_DB}
+            PGDATA: /var/lib/pg_data
+        networks:
+            - custom-network
+        restart: always
+        volumes:
+            - ${PG_DATA}:/var/lib/pg_data
+networks:
+    custom-network:
+        name: custom-network
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: ${SUBNET}
