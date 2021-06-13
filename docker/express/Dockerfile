@@ -7,6 +7,4 @@ COPY .env /usr/app/
 COPY nodemon.json /usr/app/
 RUN npm install
 
-EXPOSE 4000
-
 CMD [ "npm", "run", "dev" ]
