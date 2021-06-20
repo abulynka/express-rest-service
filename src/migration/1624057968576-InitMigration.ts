@@ -54,7 +54,6 @@ export class InitMigration1624057968576 implements MigrationInterface {
                     type: "int",
                 },
             ],
-            indices: [{columnNames: ["boardId"]}],
             foreignKeys: [
                 {
                     columnNames: ["boardId"],
@@ -139,7 +138,6 @@ export class InitMigration1624057968576 implements MigrationInterface {
                     isNullable: true,
                 },
             ],
-            indices: [{columnNames: ["userId", "boardId", "columnId"]}],
             foreignKeys: [
                 {
                     columnNames: ["userId"],

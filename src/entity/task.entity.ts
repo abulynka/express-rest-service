@@ -20,12 +20,12 @@ export class Tasks extends BaseEntity {
     @Column("text")
     description: string = '';
 
-    @OneToOne(() => Users, {nullable: true, onDelete: "SET NULL"})
+    @OneToOne(() => Users, {nullable: true, onDelete: "SET NULL", cascade: true})
     user!: Users;
 
-    @OneToOne(() => Boards, {nullable: true, onDelete: "SET NULL"})
+    @OneToOne(() => Boards, {nullable: true, onDelete: "SET NULL", cascade: true})
     board!: Boards;
 
-    @OneToOne(() => Columns, {nullable: true, onDelete: "SET NULL"})
+    @OneToOne(() => Columns, {nullable: true, onDelete: "SET NULL", cascade: true})
     column!: Columns;
 }
