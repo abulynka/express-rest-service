@@ -1,6 +1,7 @@
 import boardsRepo from './board.memory.repository';
 import tasksRepo from '../tasks/task.memory.repository';
 import Board from './board.model';
+import { Exception } from '../../middleware/exception';
 
 /**
  * Returns all boards
@@ -14,11 +15,11 @@ const getAll = async (): Promise<Map<number, Board>> => boardsRepo.getAll();
  * 
  * @param { [key: string]: string; } params new board params
  * @returns {Promise<Board>} added board
- * @throws {Error} wrong input data
+ * @throws {Exception} wrong input data
  */
 const add = async (params: { [key: string]: string; } ): Promise<Board> => {
   if (!params || !params['title'] || !params['columns']) {
-    throw new Error('Wrong input data');
+    throw new Exception(Exception.STATUS_BAD_REQUEST, 'wrong input data');
   }
 
   const board = new Board();

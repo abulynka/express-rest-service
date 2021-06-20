@@ -2,6 +2,7 @@ import tasksRepo from './task.memory.repository';
 import Task from './task.model';
 import boardService from '../boards/board.service';
 import userService from '../users/user.service';
+import { Exception } from '../../middleware/exception';
 
 /**
  * Returns all tasks
@@ -29,7 +30,7 @@ const get = async (boardId: string, taskId: string): Promise<Task> => tasksRepo.
  */
 const add = async (boardId: string, params: { [key: string]: string; }): Promise<Task> => {
   if (!params) {
-    throw new Error('Wrong input params');
+    throw new Exception(Exception.STATUS_BAD_REQUEST, 'wrong input params');
   }
 
   const task = new Task();
@@ -66,7 +67,7 @@ const add = async (boardId: string, params: { [key: string]: string; }): Promise
  */
 const update = async (boardId: string, taskId: string, params: { [key: string]: string; }): Promise<Task> => {
   if (!params) {
-    throw new Error('Wrong input params');
+    throw new Exception(Exception.STATUS_BAD_REQUEST, 'wrong input params');
   }
 
   const task = new Task();

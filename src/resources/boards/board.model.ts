@@ -1,5 +1,6 @@
 import {v4 as uuidv4} from 'uuid';
 import Column from '../columns/column.model';
+import { Exception } from '../../middleware/exception';
 
 class Board {
   id: string;
@@ -22,7 +23,7 @@ class Board {
       return false;
     })
     if (!column) {
-      throw new Error('Unable to find column');
+      throw new Exception(Exception.STATUS_NOT_FOUND, 'unable to find column');
     }
     return column;
   }

@@ -1,4 +1,5 @@
 import User from './user.model';
+import { Exception } from '../../middleware/exception';
 
 const users = new Map();
 
@@ -30,7 +31,7 @@ const get = async (id: string): Promise<User> => users.get(id);
  * @param {string} id user identifier
  * @param {object} info new user info
  * @returns {Promise<User>} updated user object
- * @throws {Error} user id not found
+ * @throws {Exception} user id not found
  */
 const update = async (id: string, info: { [key: string]: string; }): Promise<User> => {
   if (users.has(id)) {
@@ -39,7 +40,7 @@ const update = async (id: string, info: { [key: string]: string; }): Promise<Use
     user.login = info['login'];
     user.password = info['password'];
   } else {
-    throw new Error('User not found');
+    throw new Exception(Exception.STATUS_NOT_FOUND, 'user not found');
   }
   return users.get(id);
 };
@@ -48,7 +49,7 @@ const update = async (id: string, info: { [key: string]: string; }): Promise<Use
  * Removes user
  * @param {string} id search id
  * @returns {Promise<User>} deleted user object
- * @throws {Error} user not found
+ * @throws {Exception} user not found
  */
 const remove = async (id: string): Promise<User> => {
   if (users.has(id)) {
@@ -56,7 +57,7 @@ const remove = async (id: string): Promise<User> => {
     users.delete(id);
     return user;
   }
-  throw new Error('User not found');
+  throw new Exception(Exception.STATUS_NOT_FOUND, 'user not found');
 };
 
 export default { getAll, add, get, update, remove };
