@@ -5,7 +5,7 @@ export class Users extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number = 0;
 
-    @Column("text")
+    @Column("text", { unique: true })
     externalId: string = '';
 
     @Column("text")

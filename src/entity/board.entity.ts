@@ -5,9 +5,9 @@ import { Columns } from "./column.entity";
 @Entity()
 export class Boards extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id: number = 0;
+    id: number | undefined = undefined;
 
-    @Column("text")
+    @Column("text", { unique: true })
     externalId: string = '';
 
     @Column("text")
@@ -17,7 +17,7 @@ export class Boards extends BaseEntity {
         () => Columns,
         columns => columns.board,
         {
-            nullable: true,
-        })
+            cascade: true,
+    })
     columns!: Columns[];
 }

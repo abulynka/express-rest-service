@@ -46,22 +46,26 @@ const get = async (id: string): Promise<Board> => new BoardRepository().get(id);
  * @returns {Promise<Board>} updated board
  */
 const update = async (id: string, params: { [key: string]: string; }): Promise<Board> => {
-  const board = await new BoardRepository().update(id, params);
+  const board = await new BoardRepository().get(id);
+  board.title = `${ params['title'] }`;
+  board.columns = [];
 
   let columns: { [key: string]: string; }[] = [];
   if (params['columns'] && typeof params['columns'] === 'object') {
     columns = params['columns'];
   }
+
   columns.forEach(async (columnArr) => {
-      const column = new Column({
-        id: columnArr['id'],
-        title: columnArr['title'],
-        order: parseInt(`${columnArr?.['order']  }`, 10),
-      });
-      await new BoardRepository().saveColumn(column);
+      board.columns.push(
+        new Column({
+          id: columnArr['id'],
+          title: columnArr['title'],
+          order: parseInt(`${columnArr?.['order']  }`, 10),
+        })
+      );
   });
 
-  return board;
+  return new BoardRepository().update(board);
 }
 
 /**

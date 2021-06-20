@@ -7,7 +7,7 @@ export class Columns extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number = 0;
 
-    @Column("text")
+    @Column("text", { unique: true })
     externalId: string = '';
 
     @Column("text")
@@ -20,7 +20,7 @@ export class Columns extends BaseEntity {
         () => Boards,
         board => board.columns,
         {
-            cascade: true,
+            onDelete: "CASCADE",
         })
-    board!: Boards;
+    board: Boards | undefined;
 }

@@ -54,13 +54,14 @@ export class InitMigration1624057968576 implements MigrationInterface {
                     type: "int",
                 },
             ],
-            indices: [{columnNames: ["boardId"], isUnique: true }],
+            indices: [{columnNames: ["boardId"]}],
             foreignKeys: [
                 {
                     columnNames: ["boardId"],
                     referencedTableName: "boards",
                     referencedColumnNames: ["id"],
                     onDelete: "CASCADE",
+                    onUpdate: "NO ACTION",
                 },
             ],
         }), true);
@@ -138,7 +139,7 @@ export class InitMigration1624057968576 implements MigrationInterface {
                     isNullable: true,
                 },
             ],
-            indices: [{columnNames: ["userId", "boardId", "columnId"], isUnique: true }],
+            indices: [{columnNames: ["userId", "boardId", "columnId"]}],
             foreignKeys: [
                 {
                     columnNames: ["userId"],

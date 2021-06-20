@@ -13,13 +13,28 @@ export class BoardRepository {
     }
 
     public static toBoard(entity: BoardEntity): Board {
-        return new Board({
+        const board = new Board({
             id: entity.externalId,
             title: entity.title,
             columns: []
         });
+
+        entity.columns.forEach(
+            (columnEntity) => {
+                board.columns.push(BoardRepository.toColumn(columnEntity));
+            }
+        );
+
+        return board;
     }
     
+    public static toBoardEntity(board: Board): BoardEntity {
+        const boardEntity = new BoardEntity();
+        boardEntity.externalId = board.id;
+        boardEntity.title = board.title;
+        return boardEntity;
+    }
+
     public static toColumn(entity: ColumnEntity): Column {
         return new Column({
             id: entity.externalId,
@@ -41,11 +56,6 @@ export class BoardRepository {
         (await this.connection.getRepository(BoardEntity).find({ relations: ["columns"] })).forEach(
             (boardEntity) => {
                 const board = BoardRepository.toBoard(boardEntity);
-                boardEntity.columns.forEach(
-                    (columnEntity) => {
-                        board.columns.push(BoardRepository.toColumn(columnEntity));
-                    }
-                );
                 boards.push(board);
             }
         );
@@ -58,17 +68,19 @@ export class BoardRepository {
         boardEntity.title = board.title;
         boardEntity.columns = [];
 
-        await this.connection.getRepository(BoardEntity).save(boardEntity);
         board.columns.forEach(
             (column) => {
-                new BoardRepository().saveColumn(column);
+                boardEntity.columns.push(BoardRepository.toColumnEntity(column));
             }
         );
-        return board;
+
+        await this.connection.getRepository(BoardEntity).insert(boardEntity);
+
+        return this.get(board.id);
     };
 
     public async get(id: string): Promise<Board> {
-        const boardEntity = await this.connection.getRepository(BoardEntity).findOne({externalId: id});
+        const boardEntity = await this.connection.getRepository(BoardEntity).findOne({externalId: id}, {relations: ['columns']});
 
         if (!boardEntity) {
             throw new Exception(Exception.STATUS_NOT_FOUND, `unknown border id ${ id }`);
@@ -77,22 +89,35 @@ export class BoardRepository {
         return BoardRepository.toBoard(boardEntity);
     };
 
-    public async isColumnExists(id: string): Promise<boolean> {
-        const columnEntity = await this.connection.getRepository(ColumnEntity).findOne({externalId: id});
-        if (!columnEntity) {
-            return false;
-        }
-        return true;
-    }
+    public async update(board: Board): Promise<Board> {
+        await this.connection.getRepository(ColumnEntity)
+            .query(`
+                delete from columns where "boardId" = (select id from boards where "externalId" = '${ board.id }')
+            `);
 
-    public async saveColumn(column: Column): Promise<void> {
-        await this.connection.getRepository(ColumnEntity).save(BoardRepository.toColumnEntity(column));
-    }
+        await this.connection.getRepository(BoardEntity).update(
+            { externalId: board.id },
+            {
+                externalId: board.id,
+                title: board.title
+            }
+        );
 
-    public async update(id: string, params: { [key: string]: string; }): Promise<Board> {
-        await this.connection.getRepository(BoardEntity).update({externalId: id}, {title: params['title']});
+        const boardEntity = await this.connection.getRepository(BoardEntity).findOne({externalId: board.id});
 
-        return this.get(id);
+        board.columns.forEach(
+            async (column) => {
+                const columnEntity = new ColumnEntity();
+                columnEntity.externalId = column.id;
+                columnEntity.title = column.title;
+                columnEntity.order = column.order;
+                columnEntity.board = boardEntity;
+
+                await this.connection.getRepository(ColumnEntity).insert(columnEntity);
+            }
+        );
+
+        return this.get(board.id);
     };
 
     public async remove(id: string): Promise<void> {
