@@ -1,13 +1,15 @@
-import usersRepo from './user.memory.repository';
-import User from './user.model';
-import tasksRepo from '../tasks/task.memory.repository';
+// import usersRepo from './user.memory.repository';
+import { UserRepository } from './user.repository';
+import { User } from './user.model';
+// import { TaskRepository } from '../tasks/task.repository';
+// import tasksRepo from '../tasks/task.memory.repository';
 
 /**
  * Returns all users
  * `
- * @returns {Promise<Map<number, User>>} map object of users
+ * @returns {Promise<User>} array of users
  */
-const getAll = async (): Promise<Map<number, User>> => usersRepo.getAll();
+const getAll = async (): Promise<User[]> => new UserRepository().getAll();
 
 /**
  * Adds new user
@@ -26,9 +28,7 @@ const add = async (params: { [key: string]: string; }): Promise<User> => {
   user.login = params['login'];
   user.password = params['password'];
 
-  usersRepo.add(user);
-
-  return user;
+  return new UserRepository().add(user);
 };
 
 /**
@@ -37,7 +37,7 @@ const add = async (params: { [key: string]: string; }): Promise<User> => {
  * @param {string} id user id to get
  * @returns {User}
  */
-const get = async (id: string): Promise<User> => usersRepo.get(id);
+const get = async (id: string): Promise<User> => new UserRepository().get(id);
 
 /**
  * Updates user
@@ -46,7 +46,7 @@ const get = async (id: string): Promise<User> => usersRepo.get(id);
  * @param {{ [key: string]: string; }} info new user info
  * @returns {User} new User updated object
  */
-const update = async (id: string, info: {[key: string]: string;}): Promise<User> => usersRepo.update(id, info);
+const update = async (id: string, info: {[key: string]: string;}): Promise<User> => new UserRepository().update(id, info);
 
 /**
  * Removes user by input id
@@ -54,8 +54,8 @@ const update = async (id: string, info: {[key: string]: string;}): Promise<User>
  * @param {string} id user id to remove 
  */
 const remove = async (id: string) => {
-  await usersRepo.remove(id);
-  await tasksRepo.cleanUser(id);
+  await new UserRepository().remove(id);
+  // await new TaskRepository().cleanUser(id);
 }
 
 export default { getAll, add, get, update, remove };

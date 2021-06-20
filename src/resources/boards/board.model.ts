@@ -1,21 +1,21 @@
 import {v4 as uuidv4} from 'uuid';
 import Column from '../columns/column.model';
-import { Exception } from '../../middleware/exception';
+import { Exception } from '../../common/exception';
 
-class Board {
-  id: string;
+export class Board {
+  public id: string;
 
-  title: string;
+  public title: string;
 
-  columns: Column[];
+  public columns: Column[];
 
-  constructor({ id = uuidv4(), title = 'title', columns = [] } = {}) {
+  public constructor({ id = uuidv4(), title = 'title', columns = [] } = {}) {
     this.id = id;
     this.title = title;
     this.columns = columns;
   }
 
-  getColumn(id: string) {
+  public getColumn(id: string) {
     const column = this.columns.find((e) => {
       if (e.id === id) {
         return true;
@@ -31,11 +31,11 @@ class Board {
   setColumnsFromArray(columns: { [key: string]: string; }[]) {
     columns.forEach((columnArr) => {
       const column = new Column();
-      column.title = `${columnArr['title']  }`;
-      column.order = parseInt(`${columnArr['order']  }`, 10);
+      column.title = `${ columnArr['title'] }`;
+      column.order = parseInt(`${ columnArr['order'] }`, 10);
       this.columns.push(column);
     });
-  };
+  }
 
   /**
    * Converts board to object
@@ -53,5 +53,3 @@ class Board {
     return { id, title, columns };
   }
 }
-
-export default Board;

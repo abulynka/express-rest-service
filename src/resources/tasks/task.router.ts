@@ -1,8 +1,8 @@
 import httpCodes from 'http-status-codes';
 import express from 'express';
-import Task from './task.model';
+import { Task } from './task.model';
 import tasksService from './task.service';
-import { Exception } from '../../middleware/exception';
+import { Exception } from '../../common/exception';
 
 const router = express.Router({mergeParams: true});
 

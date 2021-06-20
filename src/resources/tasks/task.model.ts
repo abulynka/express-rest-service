@@ -1,6 +1,6 @@
 import {v4 as uuidv4} from 'uuid';
 
-class Task {
+export class Task {
   id: string;
 
   title: string;
@@ -38,5 +38,3 @@ class Task {
     return { id, title, order, description, userId, boardId, columnId };
   }
 }
-
-export default Task;
