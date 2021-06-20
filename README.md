@@ -70,3 +70,27 @@ npm run lint
 Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+
+### Using Docker
+
+Install docker-compose and docker applications.
+Run `docker-compose up` to run express with postgres installation. File .env contains neccessary settings.
+
+### Work with remote repository (administration)
+
+```
+docker login
+
+docker tag express-rest-service_express abulynka/express-rest-service_express
+docker push abulynka/express-rest-service_express
+
+docker tag express-rest-service_postgres abulynka/express-rest-service_postgres
+docker push abulynka/express-rest-service_postgres
+```
+
+### Images on docker hub
+Images on docker hub:
+```
+docker pull abulynka/express-rest-service_postgres
+docker pull abulynka/express-rest-service_express
+```
