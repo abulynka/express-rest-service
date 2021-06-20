@@ -1,6 +1,7 @@
 version: '3.5'
 services:
     express:
+        container_name: express
         build:
             dockerfile: docker/express/Dockerfile
             context: .
@@ -17,6 +18,7 @@ services:
             - custom-network
         restart: always
     postgres:
+        container_name: postgres
         build:
             dockerfile: docker/postgres/Dockerfile
             context: .
