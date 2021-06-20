@@ -1,9 +1,5 @@
-// import usersRepo from './user.memory.repository';
 import { UserRepository } from './user.repository';
 import { User } from './user.model';
-// import { TaskRepository } from '../tasks/task.repository';
-// import tasksRepo from '../tasks/task.memory.repository';
-
 /**
  * Returns all users
  * `
@@ -55,7 +51,6 @@ const update = async (id: string, info: {[key: string]: string;}): Promise<User>
  */
 const remove = async (id: string) => {
   await new UserRepository().remove(id);
-  // await new TaskRepository().cleanUser(id);
 }
 
 export default { getAll, add, get, update, remove };

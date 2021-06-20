@@ -76,7 +76,7 @@ export class BoardRepository {
 
         await this.connection.getRepository(BoardEntity).insert(boardEntity);
 
-        return this.get(board.id);
+        return await this.get(board.id);
     };
 
     public async get(id: string): Promise<Board> {

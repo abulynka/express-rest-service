@@ -1,6 +1,5 @@
 import { Connection, getConnection } from "typeorm";
 import { Tasks as TaskEntity } from "../../entity/task.entity";
-// import { Users as UserEntity } from "../../entity/user.entity";
 import { Task } from "./task.model";
 import { Exception } from '../../common/exception';
 
@@ -178,7 +177,7 @@ export class TaskRepository {
     };
 
     public async remove(boardId: string, taskId: string): Promise<void> {
-        this.get(boardId, taskId);
+        await this.get(boardId, taskId);
         await this.connection.getRepository(TaskEntity).delete({externalId: taskId});
     };
 }

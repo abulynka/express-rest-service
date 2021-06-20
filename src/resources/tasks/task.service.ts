@@ -52,7 +52,7 @@ const add = async (boardId: string, params: { [key: string]: string; }): Promise
     userService.get(task.userId);
   }
 
-  new TaskRepository().add(task);
+  await new TaskRepository().add(task);
 
   return task;
 };

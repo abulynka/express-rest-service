@@ -26,7 +26,7 @@ const add = async (params: { [key: string]: string; } ): Promise<Board> => {
   }
   board.setColumnsFromArray(columns);
 
-  new BoardRepository().add(board);
+  await new BoardRepository().add(board);
   return board;
 }
 
@@ -55,7 +55,7 @@ const update = async (id: string, params: { [key: string]: string; }): Promise<B
     columns = params['columns'];
   }
 
-  columns.forEach(async (columnArr) => {
+  columns.forEach((columnArr) => {
       board.columns.push(
         new Column({
           id: columnArr['id'],
@@ -65,7 +65,7 @@ const update = async (id: string, params: { [key: string]: string; }): Promise<B
       );
   });
 
-  return new BoardRepository().update(board);
+  return await new BoardRepository().update(board);
 }
 
 /**
