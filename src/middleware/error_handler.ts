@@ -1,4 +1,4 @@
-import { Logger } from './logger'
+import { Logger } from '../common/logger'
 
 export class ErrorHandler {
     private static _getErrorExitCode() {
@@ -8,14 +8,14 @@ export class ErrorHandler {
     public static init() {
         process.on('uncaughtException', async (err: string, origin: string) => {
             await Logger.singleton().log(
-                `[${  new Date().toISOString()  }] ${  err.toString()  } ${  origin.toString()}`, Logger.LOG_ERROR, true);
+                `[${ new Date().toISOString() }] ${ err.toString() } ${ origin.toString() }`, Logger.LOG_ERROR, true);
 
             process.exit(ErrorHandler._getErrorExitCode());
         });
         
         process.on('unhandledRejection', async (reason, promise) => {
             await Logger.singleton().log(
-                `[${  new Date().toISOString()  }] ${  reason?.toString()  } ${  promise.toString()}`, Logger.LOG_ERROR, true);
+                `[${ new Date().toISOString()  }] ${ reason?.toString()  } ${ JSON.stringify(promise) }`, Logger.LOG_ERROR, true);
         });
     }
 }

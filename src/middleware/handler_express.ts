@@ -1,5 +1,5 @@
 import express from 'express';
-import { Logger } from './logger';
+import { Logger } from '../common/logger';
 
 export class HandlerExpress {
     /**
