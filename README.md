@@ -7,19 +7,19 @@
 
 ## Downloading
 
-```
+```bash
 git clone {repository URL}
 ```
 
 ## Installing NPM modules
 
-```
+```bash
 npm install
 ```
 
 ## Running application
 
-```
+```bash
 npm start
 ```
 
@@ -33,26 +33,32 @@ After application running open new terminal and enter:
 
 To run all tests without authorization
 
-```
+```bash
 npm test
 ```
 
 To run only one of all test suites (users, boards or tasks)
 
-```
+```bash
 npm test <suite name>
 ```
 
 To run all test with authorization
 
-```
+```bash
 npm run test:auth
 ```
 
 To run only specific test suite with authorization (users, boards or tasks)
 
-```
+```bash
 npm run test:auth <suite name>
+```
+
+To run test and stop on failure
+
+```bash
+npm run test --bail
 ```
 
 ## Development
@@ -61,7 +67,7 @@ If you're using VSCode, you can get a better developer experience from integrati
 
 ### Auto-fix and format
 
-```
+```bash
 npm run lint
 ```
 
@@ -78,7 +84,7 @@ Run `docker-compose up` to run express with postgres installation. File .env con
 
 ### Work with remote repository (administration)
 
-```
+```bash
 docker login
 
 docker tag express-rest-service_express abulynka/express-rest-service_express
@@ -89,8 +95,28 @@ docker push abulynka/express-rest-service_postgres
 ```
 
 ### Images on docker hub
+
 Images on docker hub:
-```
+
+```bash
 docker pull abulynka/express-rest-service_postgres
 docker pull abulynka/express-rest-service_express
+```
+
+### Run Migration in Docker
+
+Run:
+
+```bash
+docker exec -ti express sh
+npm run typeorm migration:run
+exit
+```
+
+Revert:
+
+```bash
+docker exec -ti express sh
+npm run typeorm migration:revert
+exit
 ```
