@@ -2,6 +2,7 @@ import { Connection, getConnection } from "typeorm";
 import { Users as UserEntity } from "../../entity/user.entity";
 import { User } from "./user.model";
 import { Exception } from '../../common/exception';
+import { Crypt } from '../../common/crypt';
 
 export class UserRepository {
     private connection: Connection;
@@ -35,7 +36,7 @@ export class UserRepository {
         userEntity.externalId = user.id;
         userEntity.name = user.name;
         userEntity.login = user.login;
-        userEntity.password = user.password;
+        userEntity.password = await Crypt.hash(user.password);
 
         await this.connection.getRepository(UserEntity).save(userEntity);
         return user;
@@ -59,7 +60,7 @@ export class UserRepository {
             {
                 name: params['name'],
                 login: params['login'],
-                password: params['password'],
+                password: await Crypt.hash(`${ params['password'] }`),
             }
         );
         return this.get(id);
