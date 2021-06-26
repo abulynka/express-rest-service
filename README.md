@@ -120,3 +120,22 @@ docker exec -ti express sh
 npm run typeorm migration:revert
 exit
 ```
+
+### Run tests with authentication
+
+Run server:
+```bash
+docker-compose up
+```
+
+Run migration:
+```
+docker exec -ti express sh
+npm run typeorm migration:run
+exit
+```
+
+Run tests:
+```
+npm run test:auth
+```
