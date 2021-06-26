@@ -10,7 +10,8 @@ import taskRouter from './resources/tasks/task.router';
 import { HandlerExpress } from './middleware/handler_express';
 import { ErrorHandler } from './middleware/error_handler';
 import { ErrorHandlerExpress } from './middleware/error_handler_express';
-import "reflect-metadata";
+import { HandlerJWT } from './middleware/handler_jwt';
+import { LoginRouter } from './middleware/login/login.router';
 
 ErrorHandler.init();
 
@@ -23,11 +24,10 @@ const app = express();
 
 app.use('/', HandlerExpress.process);
 
-const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use('/', (req, res, next) => {
@@ -36,6 +36,11 @@ app.use('/', (req, res, next) => {
   }
   next();
 });
+
+app.use('/login', new LoginRouter().getRouter());
+
+const jwt = new HandlerJWT();
+app.use('/', jwt.process.bind(jwt));
 
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
