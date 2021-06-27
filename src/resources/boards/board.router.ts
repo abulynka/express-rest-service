@@ -1,8 +1,8 @@
 import httpCodes from 'http-status-codes';
 import express from 'express';
-import Board from './board.model';
+import { Board } from './board.model';
 import boardsService from './board.service';
-import { Exception } from '../../middleware/exception';
+import { Exception } from '../../common/exception';
 
 const router = express.Router({mergeParams: true});
 

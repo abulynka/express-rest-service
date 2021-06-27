@@ -13,7 +13,8 @@
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
-    "doc": "jsdoc -r src/ -d doc/"
+    "doc": "jsdoc -r src/ -d doc/",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "keywords": [
     "rs",
@@ -54,12 +55,15 @@
     "eslint-config-airbnb-typescript": "^12.3.1",
     "express": "^4.17.1",
     "http-status-codes": "^2.1.4",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "^4.1.6",
+    "typeorm": "^0.2.34",
     "uuid": "^8.3.2",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.17.2",
+    "@types/node": "^14.17.3",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
     "chai": "4.3.4",

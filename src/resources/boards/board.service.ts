@@ -1,14 +1,9 @@
-import boardsRepo from './board.memory.repository';
-import tasksRepo from '../tasks/task.memory.repository';
-import Board from './board.model';
-import { Exception } from '../../middleware/exception';
+import { Board } from './board.model';
+import { Exception } from '../../common/exception';
+import { BoardRepository } from './board.repository';
+import Column from '../columns/column.model';
 
-/**
- * Returns all boards
- * 
- * @returns {Promise<Map<number, Board>>} all boards
- */
-const getAll = async (): Promise<Map<number, Board>> => boardsRepo.getAll();
+const getAll = async (): Promise<Board[]> => new BoardRepository().getAll();
 
 /**
  * Adds new board
@@ -24,7 +19,6 @@ const add = async (params: { [key: string]: string; } ): Promise<Board> => {
 
   const board = new Board();
   board.title = params['title'];
-  board.title = params['title'];
 
   let columns: { [key: string]: string; }[] = [];
   if (params['columns'] && typeof params['columns'] === 'object') {
@@ -32,7 +26,7 @@ const add = async (params: { [key: string]: string; } ): Promise<Board> => {
   }
   board.setColumnsFromArray(columns);
 
-  boardsRepo.add(board);
+  await new BoardRepository().add(board);
   return board;
 }
 
@@ -42,7 +36,7 @@ const add = async (params: { [key: string]: string; } ): Promise<Board> => {
  * @param {string} id 
  * @returns {Promise<Board>} found board
  */
-const get = async (id: string): Promise<Board> => boardsRepo.get(id);
+const get = async (id: string): Promise<Board> => new BoardRepository().get(id);
 
 /**
  * Updates board
@@ -52,23 +46,26 @@ const get = async (id: string): Promise<Board> => boardsRepo.get(id);
  * @returns {Promise<Board>} updated board
  */
 const update = async (id: string, params: { [key: string]: string; }): Promise<Board> => {
-  const board = await boardsRepo.update(id, params);
-  
+  const board = await new BoardRepository().get(id);
+  board.title = `${ params['title'] }`;
+  board.columns = [];
+
   let columns: { [key: string]: string; }[] = [];
   if (params['columns'] && typeof params['columns'] === 'object') {
     columns = params['columns'];
   }
+
   columns.forEach((columnArr) => {
-    try {
-      const column = board.getColumn(`${columnArr?.['id']  }`);
-      column.title = `${columnArr?.['title']  }`;
-      column.order = parseInt(`${columnArr?.['order']  }`, 10);
-    } catch {
-      board.setColumnsFromArray([columnArr]);
-    }
+      board.columns.push(
+        new Column({
+          id: columnArr['id'],
+          title: columnArr['title'],
+          order: parseInt(`${columnArr?.['order']  }`, 10),
+        })
+      );
   });
 
-  return board;
+  return await new BoardRepository().update(board);
 }
 
 /**
@@ -78,8 +75,7 @@ const update = async (id: string, params: { [key: string]: string; }): Promise<B
  * @returns {Promise<void>}
  */
 const remove = async (id: string): Promise<void> => {
-  await tasksRepo.removeByBoardId(id);
-  await boardsRepo.remove(id);
+  await new BoardRepository().remove(id);
 }
 
 export default { getAll, add, get, update, remove };

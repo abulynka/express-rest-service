@@ -1,8 +1,8 @@
 import express from 'express';
 import httpCodes from 'http-status-codes';
-import User from './user.model';
+import { User } from './user.model';
 import usersService from './user.service';
-import { Exception } from '../../middleware/exception';
+import { Exception } from '../../common/exception';
 
 const router = express.Router({mergeParams: true});
 

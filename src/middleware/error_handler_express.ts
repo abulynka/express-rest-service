@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { Exception } from './exception';
-import { Logger } from './logger';
+import { Exception } from '../common/exception';
+import { Logger } from '../common/logger';
 
 export class ErrorHandlerExpress {
     /**
@@ -11,18 +11,18 @@ export class ErrorHandlerExpress {
      */
     public static async process(err: Exception, req: Request, res: Response, next: NextFunction) {
         const {status} = err;
-        const message = err.message || 'unknown error';
-
-        res.status(status).send();
+        const message = JSON.stringify(err);
 
         const logMessage = `[${  new Date().toISOString()
              }] "${  req.url
-             }" [${  status.toString()
+             }" [${  JSON.stringify(status)
              }] ${  JSON.stringify(req.params)
              } ${  JSON.stringify(req.body)
              } ${  message}`;
 
         await Logger.singleton().log(logMessage, Logger.LOG_EXPRESS_ERROR);
+
+        res.status(status ?? 500).send();
 
         next();
     }

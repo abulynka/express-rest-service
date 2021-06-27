@@ -1,8 +1,8 @@
-import tasksRepo from './task.memory.repository';
-import Task from './task.model';
+import { Task } from './task.model';
 import boardService from '../boards/board.service';
 import userService from '../users/user.service';
-import { Exception } from '../../middleware/exception';
+import { Exception } from '../../common/exception';
+import { TaskRepository } from './task.repository';
 
 /**
  * Returns all tasks
@@ -10,7 +10,7 @@ import { Exception } from '../../middleware/exception';
  * @param {string} boardId search criteria by board id
  * @returns {Promise<Task[]>}
  */
-const getAll = async (boardId: string): Promise<Task[]> => tasksRepo.getAll(boardId);
+const getAll = async (boardId: string): Promise<Task[]> => new TaskRepository().getAll(boardId);
 
 /**
  * Returns task by search criterias
@@ -19,7 +19,7 @@ const getAll = async (boardId: string): Promise<Task[]> => tasksRepo.getAll(boar
  * @param {string} taskId search criteria task id
  * @returns {Promise<Task>} found task
  */
-const get = async (boardId: string, taskId: string): Promise<Task> => tasksRepo.get(boardId, taskId);
+const get = async (boardId: string, taskId: string): Promise<Task> => new TaskRepository().get(boardId, taskId);
 
 /**
  * Adds new task
@@ -52,7 +52,7 @@ const add = async (boardId: string, params: { [key: string]: string; }): Promise
     userService.get(task.userId);
   }
 
-  tasksRepo.add(task);
+  await new TaskRepository().add(task);
 
   return task;
 };
@@ -82,7 +82,7 @@ const update = async (boardId: string, taskId: string, params: { [key: string]: 
   if (task.userId) {
     await userService.get(task.userId);
   }
-  await tasksRepo.update(boardId, taskId, task);
+  await new TaskRepository().update(boardId, taskId, task);
   return task;
 }
 
@@ -93,6 +93,6 @@ const update = async (boardId: string, taskId: string, params: { [key: string]: 
  * @param {string} taskId search criteria by task id
  * @returns {Promise<void>}
  */
-const remove = async (boardId: string, taskId: string): Promise<void> => tasksRepo.remove(boardId, taskId);
+const remove = async (boardId: string, taskId: string): Promise<void> => new TaskRepository().remove(boardId, taskId);
 
 export default { getAll, get, add, update, remove };
