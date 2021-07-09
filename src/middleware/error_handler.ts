@@ -8,7 +8,10 @@ export class ErrorHandler {
     public static init() {
         process.on('uncaughtException', async (err: string, origin: string) => {
             await Logger.singleton().log(
-                `[${ new Date().toISOString() }] ${ err.toString() } ${ origin.toString() }`, Logger.LOG_ERROR, true);
+                `[${ new Date().toISOString() }] ${ err.toString() } ${ origin.toString() } ${ JSON.stringify(new Error().stack) }`,
+                Logger.LOG_ERROR,
+                true
+            );
 
             process.exit(ErrorHandler._getErrorExitCode());
         });

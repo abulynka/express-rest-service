@@ -1,4 +1,6 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import {v4 as uuidv4} from 'uuid';
+import { Crypt } from '../common/crypt';
 
 export class InitMigration1624057968576 implements MigrationInterface {
 
@@ -160,6 +162,17 @@ export class InitMigration1624057968576 implements MigrationInterface {
                 },
             ],
         }), true);
+
+        // insert admin user with password
+        await queryRunner.query(`
+            INSERT
+              INTO users ( "externalId", name, login, password )
+            VALUES ( $1, 'admin', 'admin',  $2)`,
+            [
+                uuidv4(),
+                await Crypt.hash('admin'),
+            ]
+        );
     }
 
     // eslint-disable-next-line class-methods-use-this
