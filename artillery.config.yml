@@ -1,0 +1,67 @@
+config:
+  target: "http://localhost:4000"
+  phases:
+    - duration: 10
+      arrivalRate: 10
+      rampTo: 10
+      name: users
+
+before:
+  flow:
+    # - log: "Get auth token"
+    - post:
+        url: "/login"
+        json:
+          login: "admin"
+          password: "admin"
+        capture:
+          - json: $.token
+            as: token
+
+scenarios:
+  - flow:
+    # - log: "Get All Users"
+    # - log: "get /users"
+    - get:
+        url: "/users"
+        headers:
+          authorization: "Bearer {{ token }}"
+
+    # - log: "Create User"
+    # - log: "post /users"
+    - post:
+        url: "/users"
+        headers:
+          authorization: "Bearer {{ token }}"
+        json:
+          name: "USER_NAME"
+          login: "USER_LOGIN"
+          password: "USER_PASSWORD"
+        capture:
+          - json: $.id
+            as: user_id
+
+    # - log: "Get user by ID"
+    # - log: "get /users/{{ user_id }}"
+    - get:
+        url: "/users/{{ user_id }}"
+        headers:
+          authorization: "Bearer {{ token }}"
+
+    # - log: "Update User"
+    # - log: "/users/{{ user_id }}"
+    - put:
+        url: "/users/{{ user_id }}"
+        headers:
+          authorization: "Bearer {{ token }}"
+        json:
+          name: "USER_NAME_1"
+          login: "USER_LOGIN_1"
+          password: "USER_PASSWORD_1"
+
+    # - log: "Get user by ID"
+    # - log: "get /users/{{ user_id }}"
+    - get:
+        url: "/users/{{ user_id }}"
+        headers:
+          authorization: "Bearer {{ token }}"
