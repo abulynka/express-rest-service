@@ -108,7 +108,7 @@ docker pull abulynka/express-rest-service_express
 Run:
 
 ```bash
-docker exec -ti express sh
+docker exec -ti nestjs sh
 npm run typeorm migration:run
 exit
 ```
@@ -116,7 +116,7 @@ exit
 Revert:
 
 ```bash
-docker exec -ti express sh
+docker exec -ti nestjs sh
 npm run typeorm migration:revert
 exit
 ```
@@ -130,7 +130,7 @@ docker-compose up
 
 Run migration:
 ```
-docker exec -ti express sh
+docker exec -ti nestjs sh
 npm run typeorm migration:run
 exit
 ```
