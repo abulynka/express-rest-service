@@ -20,7 +20,7 @@ export class LoggingInterceptor implements NestInterceptor {
                     + ` - `
                     + `${ JSON.stringify(context.switchToHttp().getRequest().body) }`;
        
-                LoggerService.singleton().log(message, LoggerService.LOG_HTTP_SUCCESS);
+                new LoggerService().log(message, LoggerService.LOG_HTTP_SUCCESS);
             }
         ),
       );

@@ -6,10 +6,10 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { AppLoggerService } from 'common/logger/app-logger.service';
-import { DB } from './common/db';
-import { AppModule } from './app.module';
-import { LoggingInterceptor } from './common/logger/logging.interceptor';
+import { AppLoggerService } from 'src/common/logger/app-logger.service';
+import { DB } from 'src/common/db';
+import { AppModule } from 'src/app.module';
+import { LoggingInterceptor } from 'src/common/logger/logging.interceptor';
 
 async function bootstrap() {
   await new DB().init();

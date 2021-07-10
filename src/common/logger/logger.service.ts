@@ -6,7 +6,15 @@ export class LoggerService {
 
     static readonly LOG_HTTP_ERROR = 'http-error';
 
-    static readonly LOG_ERROR = 'app-error';
+    static readonly LOG_APP_LOG = 'app-log';
+
+    static readonly LOG_APP_ERROR = 'app-error';
+
+    static readonly LOG_APP_WARN = 'app-warn';
+
+    static readonly LOG_APP_DEBUG = 'app-debug';
+
+    static readonly LOG_APP_VERBOSE = 'app-verbose';
 
     static readonly LOG_TO_STDOUT = 1;
 
@@ -25,15 +33,6 @@ export class LoggerService {
             fs.mkdirSync(this.logDir);
         }
     }
-
-    public static singleton(): LoggerService {
-        if (!LoggerService.instance) {
-            LoggerService.instance = new LoggerService();
-        }
-        return LoggerService.instance;
-    }
-
-    private static instance: LoggerService;
 
     private logTo: number = LoggerService.LOG_TO_STDOUT_FILE;
 

@@ -41,10 +41,11 @@ export class PGTasksStorage implements TasksStorage {
 
   public async create(boardId: string, task: CreateTaskDto): Promise<TaskEntity> {
     const board = await this.boardStorage.findOne(boardId);
+    const currentTask = task;
     if (board) {
-      task.board = classToPlain(board);
+      currentTask.board = classToPlain(board);
     }
-    const created = await this.repository.save(this.repository.create(classToPlain(task)));
+    const created = await this.repository.save(this.repository.create(classToPlain(currentTask)));
     await this.repository.query('UPDATE tasks SET "boardId" = $1 WHERE id = $2', [created.board.id, created.id]);
     return created;
   }
