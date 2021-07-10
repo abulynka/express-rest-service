@@ -33,7 +33,7 @@
       "error",
       {
         "allowModules": [],
-        "resolvePaths": ["./src"],
+        "resolvePaths": ["./"],
         "tryExtensions": [".js", ".json", ".node", ".ts"]
       }
     ]

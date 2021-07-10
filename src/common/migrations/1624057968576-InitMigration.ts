@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { Crypt } from '../../common/crypt';
+import { Crypt } from "../crypt";
 
 export class InitMigration1624057968576 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

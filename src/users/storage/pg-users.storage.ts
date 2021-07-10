@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { getConnection, Repository } from 'typeorm';
+import { classToPlain } from 'class-transformer';
 import { UserEntity } from '../entities/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UsersStorage } from '../interfaces/users-storage.interface';
-import { classToPlain } from 'class-transformer';
 
 @Injectable()
 export class PGUsersStorage implements UsersStorage {
@@ -33,7 +33,7 @@ export class PGUsersStorage implements UsersStorage {
   public async update(id: string, user: UpdateUserDto): Promise<UserEntity | undefined> {
     await this.repository.update(
       {
-        id: id,
+        id,
       },
       this.repository.create(classToPlain(user)),
     );
@@ -44,7 +44,7 @@ export class PGUsersStorage implements UsersStorage {
     if (!await this.findOne(id)) {
       return false;
     }
-    await this.repository.delete({ id: id });
+    await this.repository.delete({ id });
     return true;
   }
 }

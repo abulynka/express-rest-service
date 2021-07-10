@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
-import { Crypt } from '../../common/crypt';
 import { v4 as uuidv4 } from 'uuid';
+import { Crypt } from '../../common/crypt';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -32,6 +32,6 @@ export class UserEntity extends BaseEntity {
   }
 
   async checkPassword(password: string): Promise<boolean> {
-    return await Crypt.compare(password, this.password);
+    return Crypt.compare(password, this.password);
   }
 }

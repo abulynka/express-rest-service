@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { getConnection, Repository } from 'typeorm';
+import { classToPlain } from 'class-transformer';
+import { PGBoardsStorage } from 'src/boards/storage/pg-boards.storage';
 import { TaskEntity } from '../entities/task.entity';
 import { CreateTaskDto } from '../dto/create-task.dto';
 import { UpdateTaskDto } from '../dto/update-task.dto';
 import { TasksStorage } from '../interfaces/tasks-storage.interface';
-import { classToPlain } from 'class-transformer';
-import { PGBoardsStorage } from 'src/boards/storage/pg-boards.storage';
 
 @Injectable()
 export class PGTasksStorage implements TasksStorage {

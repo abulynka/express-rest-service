@@ -16,8 +16,8 @@ export class BoardsController {
       return board;
     }
     const boardPlain = classToPlain(board);
-    if (boardPlain['column'] && boardPlain['column']['id']) {
-      boardPlain['columnId'] = boardPlain['column']['id'];
+    if (boardPlain['column'] && boardPlain['column'].id) {
+      boardPlain['columnId'] = boardPlain['column'].id;
     } else {
       boardPlain['columnId'] = null;
     }

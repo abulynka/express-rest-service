@@ -14,7 +14,6 @@ export class AuthSecret {
             AuthSecret.secretKey = result.parsed['JWT_SECRET_KEY'];
         }
         
-        console.log(AuthSecret.secretKey);
         return AuthSecret.secretKey;
     }
 }

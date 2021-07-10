@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { getConnection, Repository } from 'typeorm';
+import { classToPlain } from 'class-transformer';
 import { BoardEntity } from '../entities/board.entity';
 import { CreateBoardDto } from '../dto/create-board.dto';
 import { UpdateBoardDto } from '../dto/update-board.dto';
 import { BoardsStorage } from '../interfaces/boards-storage.interface';
-import { classToPlain } from 'class-transformer';
 
 @Injectable()
 export class PGBoardsStorage implements BoardsStorage {

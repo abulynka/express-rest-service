@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BeforeInsert } from 'typeorm';
 import { Expose } from 'class-transformer';
-import { BoardEntity } from '../../boards/entities/board.entity';
 import { v4 as uuidv4 } from 'uuid';
+import { BoardEntity } from '../../boards/entities/board.entity';
 
 @Entity({ name: 'columns' })
 export class ColumnEntity extends BaseEntity {
