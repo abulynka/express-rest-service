@@ -2,9 +2,6 @@ import {
   Controller,
   Post,
   Body,
-  // ClassSerializerInterceptor,
-  // UseInterceptors,
-  // HttpCode,
   ForbiddenException,
   UseGuards
 } from '@nestjs/common';
@@ -13,7 +10,6 @@ import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 
 @Controller()
-// @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
   constructor(
     private readonly authService: AuthService
@@ -21,8 +17,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  // @HttpCode(200)
-  async login(@Body() authDto: AuthDto) {
+    async login(@Body() authDto: AuthDto) {
     const login = this.authService.login(authDto);
     if (!login) {
       throw new ForbiddenException();
