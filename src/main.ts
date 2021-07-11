@@ -10,6 +10,7 @@ import { AppLoggerService } from 'src/logger/app-logger.service';
 import { DB } from 'src/common/db';
 import { AppModule } from 'src/app.module';
 import { LoggingInterceptor } from 'src/logger/logging.interceptor';
+import { AllExceptionsFilter } from './logger/all-exceptions.filter';
 
 async function bootstrap() {
   await DB.init();
@@ -28,6 +29,8 @@ async function bootstrap() {
   }
 
   app.useGlobalInterceptors(app.get(LoggingInterceptor));
+
+  app.useGlobalFilters(app.get(AllExceptionsFilter));
 
   app.useLogger(app.get(AppLoggerService));
 

@@ -2,6 +2,7 @@ import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nes
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LoggerService } from './logger.service';
+import { stringify } from 'flatted';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
@@ -15,12 +16,12 @@ export class LoggingInterceptor implements NestInterceptor {
             () => {
                 const message = `[${ new Date().toISOString() }]`
                     + ` "${ context.switchToHttp().getRequest().url }"`
-                    + ` [${ context.switchToHttp().getResponse().statusCode } - ${ JSON.stringify(context.switchToHttp().getResponse().statusMessage || '') }]`
-                    + ` ${ JSON.stringify(context.switchToHttp().getRequest().query) }`
+                    + ` [${ context.switchToHttp().getResponse().statusCode } - ${ stringify(context.switchToHttp().getResponse().statusMessage || '') }]`
+                    + ` ${ stringify(context.switchToHttp().getRequest().query) }`
                     + ` - `
-                    + `${ JSON.stringify(context.switchToHttp().getRequest().params || '') }`
+                    + `${ stringify(context.switchToHttp().getRequest().params || '') }`
                     + ` - `
-                    + `${ JSON.stringify(context.switchToHttp().getRequest().body) }`;
+                    + `${ stringify(context.switchToHttp().getRequest().body) }`;
        
                 this.loggerService.log(message, LoggerService.LOG_HTTP_SUCCESS);
             }

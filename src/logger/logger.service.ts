@@ -18,6 +18,8 @@ export class LoggerService {
 
     static readonly LOG_APP_VERBOSE = 'app-verbose';
 
+    static readonly LOG_ALL_EXCEPTIONS = 'all-exceptions';
+
     static readonly LOG_TO_STDOUT = 1;
 
     static readonly LOG_TO_FILE = 2;

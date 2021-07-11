@@ -12,7 +12,7 @@ import {
   UseFilters
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
+import { HttpExceptionFilter } from 'src/logger/http-exception.filter';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';

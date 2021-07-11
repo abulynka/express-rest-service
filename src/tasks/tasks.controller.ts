@@ -5,7 +5,7 @@ import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './entities/task.entity';
-import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
+import { HttpExceptionFilter } from 'src/logger/http-exception.filter';
 
 @Controller('boards/:boardId/tasks')
 @UseGuards(JwtAuthGuard)
