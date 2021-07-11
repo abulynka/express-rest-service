@@ -17,11 +17,13 @@ async function bootstrap() {
 
   let app;
   if (process.env['USE_FASTIFY'] === 'true') {
+    process.stdout.write(`Use fastify engine${os.EOL}`);
     app = await NestFactory.create<NestFastifyApplication>(
       AppModule,
       new FastifyAdapter()
     );
   } else {
+    process.stdout.write(`Use express engine${os.EOL}`);
     app = await NestFactory.create(AppModule);
   }
 
@@ -33,6 +35,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('doc', app, document);
 
-  await app.listen(`${app.get(ConfigService).get('PORT')}`);
+  await app.listen(`${app.get(ConfigService).get('PORT')}`, '0.0.0.0');
 }
 bootstrap();

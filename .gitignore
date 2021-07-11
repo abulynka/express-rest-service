@@ -37,3 +37,5 @@ doc
 build
 pg_data
 migration
+result.json
+result.json.html

@@ -2,9 +2,11 @@ config:
   target: "http://localhost:4000"
   phases:
     - duration: 10
-      arrivalRate: 10
-      rampTo: 10
-      name: users
+      arrivalRate: 30
+
+  defaults:
+    headers:
+      authorization: "Bearer {{ token }}"
 
 before:
   flow:
@@ -24,15 +26,11 @@ scenarios:
     # - log: "get /users"
     - get:
         url: "/users"
-        headers:
-          authorization: "Bearer {{ token }}"
 
     # - log: "Create User"
     # - log: "post /users"
     - post:
         url: "/users"
-        headers:
-          authorization: "Bearer {{ token }}"
         json:
           name: "USER_NAME"
           login: "USER_LOGIN"
@@ -45,15 +43,11 @@ scenarios:
     # - log: "get /users/{{ user_id }}"
     - get:
         url: "/users/{{ user_id }}"
-        headers:
-          authorization: "Bearer {{ token }}"
 
     # - log: "Update User"
     # - log: "/users/{{ user_id }}"
     - put:
         url: "/users/{{ user_id }}"
-        headers:
-          authorization: "Bearer {{ token }}"
         json:
           name: "USER_NAME_1"
           login: "USER_LOGIN_1"
@@ -63,5 +57,8 @@ scenarios:
     # - log: "get /users/{{ user_id }}"
     - get:
         url: "/users/{{ user_id }}"
-        headers:
-          authorization: "Bearer {{ token }}"
+
+    # - log: "Delete user"
+    # - log: " delete users/{{ user_id }}"
+    - delete:
+        url: "users/{{ user_id }}"

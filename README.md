@@ -80,7 +80,7 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 ### Using Docker
 
 Install docker-compose and docker applications.
-Run `docker-compose up` to run express with postgres installation. File .env contains neccessary settings.
+Run `docker-compose up` to run nestjs with postgres installation. File .env contains neccessary settings.
 
 ### Work with remote repository (administration)
 
@@ -124,18 +124,135 @@ exit
 ### Run tests with authentication
 
 Run server:
+
 ```bash
 docker-compose up
 ```
 
 Run migration:
-```
+
+```bash
 docker exec -ti nestjs sh
 npm run typeorm migration:run
 exit
 ```
 
 Run tests:
-```
+
+```bash
 npm run test:auth
+```
+
+## Comparing nestjs with express and fastify engines using artillery app
+
+.env file has USE_FASTIFY flag. `USE_FASTIFY=false` - uses express engine, `USE_FASTIFY=true` - uses fastify engine
+
+Commands:
+
+```bash
+npm run artillery
+```
+
+### Express engine log
+
+```yaml
+Started phase 0, duration: 10s @ 03:20:20(+0300) 2021-07-11
+Report @ 03:20:30(+0300) 2021-07-11
+Elapsed time: 10 seconds
+  Scenarios launched:  299
+  Scenarios completed: 0
+  Requests completed:  598
+  Mean response/sec: 60.04
+  Response time (msec):
+    min: 0
+    max: 3
+    median: 1
+    p95: 1
+    p99: 1
+  Codes:
+    401: 598
+
+Report @ 03:20:31(+0300) 2021-07-11
+Elapsed time: 10 seconds
+  Scenarios launched:  1
+  Scenarios completed: 0
+  Requests completed:  2
+  Mean response/sec: 4
+  Response time (msec):
+    min: 1
+    max: 1
+    median: 1
+    p95: 1
+    p99: 1
+  Codes:
+    401: 2
+
+All virtual users finished
+Summary report @ 03:20:31(+0300) 2021-07-11
+  Scenarios launched:  300
+  Scenarios completed: 0
+  Requests completed:  600
+  Mean response/sec: 57.31
+  Response time (msec):
+    min: 0
+    max: 3
+    median: 1
+    p95: 1
+    p99: 1
+  Scenario counts:
+    0: 300 (100%)
+  Codes:
+    401: 600
+```
+
+### Fastify engine log
+
+```yaml
+Started phase 0, duration: 10s @ 03:21:36(+0300) 2021-07-11
+Report @ 03:21:46(+0300) 2021-07-11
+Elapsed time: 10 seconds
+  Scenarios launched:  299
+  Scenarios completed: 0
+  Requests completed:  598
+  Mean response/sec: 60.04
+  Response time (msec):
+    min: 0
+    max: 31
+    median: 0
+    p95: 1
+    p99: 2
+  Codes:
+    401: 598
+
+Report @ 03:21:47(+0300) 2021-07-11
+Elapsed time: 10 seconds
+  Scenarios launched:  1
+  Scenarios completed: 0
+  Requests completed:  2
+  Mean response/sec: 4
+  Response time (msec):
+    min: 1
+    max: 1
+    median: 1
+    p95: 1
+    p99: 1
+  Codes:
+    401: 2
+
+All virtual users finished
+Summary report @ 03:21:47(+0300) 2021-07-11
+  Scenarios launched:  300
+  Scenarios completed: 0
+  Requests completed:  600
+  Mean response/sec: 57.31
+  Response time (msec):
+    min: 0
+    max: 31
+    median: 0
+    p95: 1
+    p99: 2
+  Scenario counts:
+    0: 300 (100%)
+  Codes:
+    401: 600
 ```
