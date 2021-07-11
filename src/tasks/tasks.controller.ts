@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Put, Param, Delete, NotFoundException, UseGuards, UseInterceptors, ClassSerializerInterceptor, UseFilters } from '@nestjs/common';
 import { classToPlain } from 'class-transformer';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { HttpExceptionFilter } from 'src/logger/http-exception.filter';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './entities/task.entity';
-import { HttpExceptionFilter } from 'src/logger/http-exception.filter';
 
 @Controller('boards/:boardId/tasks')
 @UseGuards(JwtAuthGuard)

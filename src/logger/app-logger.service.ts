@@ -3,9 +3,7 @@ import { LoggerService as LocalLoggerService } from './logger.service';
 
 @Injectable()
 export class AppLoggerService implements LoggerService {
-  constructor(private readonly localLoggerService: LocalLoggerService) {
-    this.localLoggerService.setLogTo(LocalLoggerService.LOG_TO_STDOUT_FILE);
-  }
+  constructor(private readonly localLoggerService: LocalLoggerService) { }
 
   log(message: string) {
     this.localLoggerService.log(message, LocalLoggerService.LOG_APP_LOG);

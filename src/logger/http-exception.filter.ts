@@ -1,6 +1,7 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, Injectable } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { stringify } from 'flatted';
+import { LoggerService } from './logger.service';
 
 @Injectable()
 @Catch(HttpException)
@@ -16,8 +17,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
           path: request.url,
         };
 
-        const log = status + ' - ' + stringify(message);
-        process.stdout.write(log);
+        const log = `${status  } - ${  stringify(message)}`;
+        new LoggerService().log(log, LoggerService.LOG_HTTP_ERROR);
 
         if (process.env['USE_FASTIFY'] === 'true') {
           response = ctx.getResponse<Response>();

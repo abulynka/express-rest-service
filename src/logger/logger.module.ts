@@ -6,7 +6,7 @@ import { AllExceptionsFilter } from './all-exceptions.filter';
 import { HttpExceptionFilter } from './http-exception.filter';
 
 @Module({
-  providers: [LoggerService, AppLoggerService, LoggingInterceptor, AllExceptionsFilter, HttpExceptionFilter],
   exports: [LoggerService, AppLoggerService, LoggingInterceptor],
+  providers: [LoggerService, AppLoggerService, LoggingInterceptor, AllExceptionsFilter, HttpExceptionFilter]
 })
 export class LoggerModule {}

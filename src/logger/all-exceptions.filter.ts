@@ -8,7 +8,6 @@ import { stringify } from 'flatted';
 export class AllExceptionsFilter extends BaseExceptionFilter {
     constructor(private readonly loggerService: LoggerService) {
         super();
-        this.loggerService.setLogTo(LoggerService.LOG_TO_STDOUT_FILE);
 
         process.on('uncaughtException', async (err: string, origin: string) => {
             await this.loggerService.log(
@@ -28,7 +27,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
     }
 
     catch(exception: unknown, host: ArgumentsHost) {
-        this.loggerService.log(stringify(exception) + ' ' + stringify(host), LoggerService.LOG_ALL_EXCEPTIONS);
+        this.loggerService.log(`${stringify(exception)  } ${  stringify(host)}`, LoggerService.LOG_ALL_EXCEPTIONS);
         super.catch(exception, host);
     }
 }
