@@ -156,103 +156,43 @@ npm run artillery
 ### Express engine log
 
 ```yaml
-Started phase 0, duration: 10s @ 03:20:20(+0300) 2021-07-11
-Report @ 03:20:30(+0300) 2021-07-11
-Elapsed time: 10 seconds
-  Scenarios launched:  299
-  Scenarios completed: 0
-  Requests completed:  598
-  Mean response/sec: 60.04
-  Response time (msec):
-    min: 0
-    max: 3
-    median: 1
-    p95: 1
-    p99: 1
-  Codes:
-    401: 598
-
-Report @ 03:20:31(+0300) 2021-07-11
-Elapsed time: 10 seconds
-  Scenarios launched:  1
-  Scenarios completed: 0
-  Requests completed:  2
-  Mean response/sec: 4
-  Response time (msec):
-    min: 1
-    max: 1
-    median: 1
-    p95: 1
-    p99: 1
-  Codes:
-    401: 2
-
 All virtual users finished
-Summary report @ 03:20:31(+0300) 2021-07-11
+Summary report @ 11:07:41(+0300) 2021-07-11
   Scenarios launched:  300
-  Scenarios completed: 0
-  Requests completed:  600
-  Mean response/sec: 57.31
+  Scenarios completed: 300
+  Requests completed:  1800
+  Mean response/sec: 171.59
   Response time (msec):
     min: 0
-    max: 3
-    median: 1
-    p95: 1
-    p99: 1
+    max: 70
+    median: 2
+    p95: 56
+    p99: 58
   Scenario counts:
     0: 300 (100%)
   Codes:
-    401: 600
+    200: 1500
+    201: 300
 ```
 
 ### Fastify engine log
 
 ```yaml
-Started phase 0, duration: 10s @ 03:21:36(+0300) 2021-07-11
-Report @ 03:21:46(+0300) 2021-07-11
-Elapsed time: 10 seconds
-  Scenarios launched:  299
-  Scenarios completed: 0
-  Requests completed:  598
-  Mean response/sec: 60.04
-  Response time (msec):
-    min: 0
-    max: 31
-    median: 0
-    p95: 1
-    p99: 2
-  Codes:
-    401: 598
-
-Report @ 03:21:47(+0300) 2021-07-11
-Elapsed time: 10 seconds
-  Scenarios launched:  1
-  Scenarios completed: 0
-  Requests completed:  2
-  Mean response/sec: 4
-  Response time (msec):
-    min: 1
-    max: 1
-    median: 1
-    p95: 1
-    p99: 1
-  Codes:
-    401: 2
-
 All virtual users finished
-Summary report @ 03:21:47(+0300) 2021-07-11
+Summary report @ 11:09:12(+0300) 2021-07-11
   Scenarios launched:  300
-  Scenarios completed: 0
-  Requests completed:  600
-  Mean response/sec: 57.31
+  Scenarios completed: 300
+  Requests completed:  1800
+  Mean response/sec: 171.59
   Response time (msec):
     min: 0
-    max: 31
-    median: 0
-    p95: 1
-    p99: 2
+    max: 71
+    median: 2
+    p95: 55
+    p99: 59
   Scenario counts:
     0: 300 (100%)
   Codes:
-    401: 600
+    200: 1500
+    201: 300
 ```
