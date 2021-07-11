@@ -20,6 +20,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Controller('users')
 @UseGuards(JwtAuthGuard)
 @UseInterceptors(ClassSerializerInterceptor)
+@UseFilters(HttpExceptionFilter)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -29,7 +30,6 @@ export class UsersController {
   }
 
   @Get()
-  @UseFilters(HttpExceptionFilter)
   findAll() {
     return this.usersService.findAll();
   }

@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, NotFoundException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, NotFoundException, UseGuards, UseFilters, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { classToPlain } from 'class-transformer';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
@@ -8,6 +9,8 @@ import { BoardEntity } from './entities/board.entity';
 
 @Controller('boards')
 @UseGuards(JwtAuthGuard)
+@UseInterceptors(ClassSerializerInterceptor)
+@UseFilters(HttpExceptionFilter)
 export class BoardsController {
   constructor(private readonly boardsService: BoardsService) {}
 
