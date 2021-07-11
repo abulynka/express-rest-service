@@ -16,7 +16,6 @@ import { LoggerModule } from './logger/logger.module';
     TasksModule,
     UsersModule,
     LoggerModule
-    // LoggingInterceptor
   ],
   controllers: [AppController],
   providers: [AppService],
