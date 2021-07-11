@@ -5,7 +5,7 @@ import { PGUsersStorage } from './storage/pg-users.storage';
 
 @Injectable()
 export class UsersService {
-  constructor(private storage: PGUsersStorage) {}
+  constructor(private readonly storage: PGUsersStorage) {}
 
   create(createUserDto: CreateUserDto) {
     return this.storage.create(createUserDto);

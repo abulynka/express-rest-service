@@ -6,13 +6,13 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { AppLoggerService } from 'src/common/logger/app-logger.service';
+import { AppLoggerService } from 'src/logger/app-logger.service';
 import { DB } from 'src/common/db';
 import { AppModule } from 'src/app.module';
-import { LoggingInterceptor } from 'src/common/logger/logging.interceptor';
+import { LoggingInterceptor } from 'src/logger/logging.interceptor';
 
 async function bootstrap() {
-  await new DB().init();
+  await DB.init();
   process.stdout.write(`DB connected${os.EOL}`);
 
   let app;
@@ -27,9 +27,9 @@ async function bootstrap() {
     app = await NestFactory.create(AppModule);
   }
 
-  app.useGlobalInterceptors(new LoggingInterceptor());
+  app.useGlobalInterceptors(app.get(LoggingInterceptor));
 
-  app.useLogger(new AppLoggerService());
+  app.useLogger(app.get(AppLoggerService));
 
   const config = new DocumentBuilder().build();
   const document = SwaggerModule.createDocument(app, config);

@@ -1,10 +1,10 @@
 import { ColumnDto } from "src/columns/dto/column.dto";
 
 export class CreateBoardDto {
-    id!: string;
+  id!: string;
 
-    title!: string;
+  title!: string;
 
-    columns!: ColumnDto[];
-  }
+  columns!: ColumnDto[];
+}
   

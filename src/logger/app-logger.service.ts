@@ -1,11 +1,9 @@
-import { LoggerService } from '@nestjs/common';
+import { Injectable, LoggerService } from '@nestjs/common';
 import { LoggerService as LocalLoggerService } from './logger.service';
 
+@Injectable()
 export class AppLoggerService implements LoggerService {
-  private localLoggerService: LocalLoggerService;
-
-  constructor() {
-    this.localLoggerService = new LocalLoggerService();
+  constructor(private readonly localLoggerService: LocalLoggerService) {
     this.localLoggerService.setLogTo(LocalLoggerService.LOG_TO_STDOUT_FILE);
   }
 

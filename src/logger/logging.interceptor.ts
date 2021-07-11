@@ -5,6 +5,8 @@ import { LoggerService } from './logger.service';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
+  constructor(private readonly loggerService: LoggerService) { }
+
   intercept(context: ExecutionContext, next: CallHandler): Observable<string> {
     return next
       .handle()
@@ -20,7 +22,7 @@ export class LoggingInterceptor implements NestInterceptor {
                     + ` - `
                     + `${ JSON.stringify(context.switchToHttp().getRequest().body) }`;
        
-                new LoggerService().log(message, LoggerService.LOG_HTTP_SUCCESS);
+                this.loggerService.log(message, LoggerService.LOG_HTTP_SUCCESS);
             }
         ),
       );

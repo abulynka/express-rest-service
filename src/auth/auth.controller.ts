@@ -17,7 +17,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-    async login(@Body() authDto: AuthDto) {
+  async login(@Body() authDto: AuthDto) {
     const login = this.authService.login(authDto);
     if (!login) {
       throw new ForbiddenException();

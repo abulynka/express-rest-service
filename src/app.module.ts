@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { BoardsModule } from './boards/boards.module';
 import { TasksModule } from './tasks/tasks.module';
 import { AuthModule } from './auth/auth.module';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { AuthModule } from './auth/auth.module';
     BoardsModule,
     TasksModule,
     UsersModule,
-    AppService,
+    LoggerModule
+    // LoggingInterceptor
   ],
   controllers: [AppController],
   providers: [AppService],

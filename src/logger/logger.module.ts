@@ -5,7 +5,7 @@ import { AppLoggerService } from './app-logger.service';
 import { LoggingInterceptor } from './logging.interceptor';
 
 @Module({
-  providers: [AppLoggerService],
+  providers: [AppLoggerService, LoggerService, LoggingInterceptor],
   exports: [AppLoggerService, LoggerService, LoggingInterceptor],
 })
 export class LoggerModule {}

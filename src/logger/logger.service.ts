@@ -1,6 +1,8 @@
+import { Injectable } from "@nestjs/common";
 import * as fs from "fs";
 import { EOL } from 'os';
 
+@Injectable()
 export class LoggerService {
     static readonly LOG_HTTP_SUCCESS = 'http-success';
 

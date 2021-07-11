@@ -29,7 +29,7 @@ export class UsersController {
   }
 
   @Get()
-  @UseFilters(new HttpExceptionFilter())
+  @UseFilters(HttpExceptionFilter)
   findAll() {
     return this.usersService.findAll();
   }
