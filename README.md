@@ -80,7 +80,7 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 ### Using Docker
 
 Install docker-compose and docker applications.
-Run `docker-compose up` to run express with postgres installation. File .env contains neccessary settings.
+Run `docker-compose up` to run nestjs with postgres installation. File .env contains neccessary settings.
 
 ### Work with remote repository (administration)
 
@@ -108,7 +108,7 @@ docker pull abulynka/express-rest-service_express
 Run:
 
 ```bash
-docker exec -ti express sh
+docker exec -ti nestjs sh
 npm run typeorm migration:run
 exit
 ```
@@ -116,7 +116,7 @@ exit
 Revert:
 
 ```bash
-docker exec -ti express sh
+docker exec -ti nestjs sh
 npm run typeorm migration:revert
 exit
 ```
@@ -124,18 +124,75 @@ exit
 ### Run tests with authentication
 
 Run server:
+
 ```bash
 docker-compose up
 ```
 
 Run migration:
-```
-docker exec -ti express sh
+
+```bash
+docker exec -ti nestjs sh
 npm run typeorm migration:run
 exit
 ```
 
 Run tests:
-```
+
+```bash
 npm run test:auth
+```
+
+## Comparing nestjs with express and fastify engines using artillery app
+
+.env file has USE_FASTIFY flag. `USE_FASTIFY=false` - uses express engine, `USE_FASTIFY=true` - uses fastify engine
+
+Commands:
+
+```bash
+npm run artillery
+```
+
+### Express engine log
+
+```yaml
+All virtual users finished
+Summary report @ 11:07:41(+0300) 2021-07-11
+  Scenarios launched:  300
+  Scenarios completed: 300
+  Requests completed:  1800
+  Mean response/sec: 171.59
+  Response time (msec):
+    min: 0
+    max: 70
+    median: 2
+    p95: 56
+    p99: 58
+  Scenario counts:
+    0: 300 (100%)
+  Codes:
+    200: 1500
+    201: 300
+```
+
+### Fastify engine log
+
+```yaml
+All virtual users finished
+Summary report @ 11:09:12(+0300) 2021-07-11
+  Scenarios launched:  300
+  Scenarios completed: 300
+  Requests completed:  1800
+  Mean response/sec: 171.59
+  Response time (msec):
+    min: 0
+    max: 71
+    median: 2
+    p95: 55
+    p99: 59
+  Scenario counts:
+    0: 300 (100%)
+  Codes:
+    200: 1500
+    201: 300
 ```

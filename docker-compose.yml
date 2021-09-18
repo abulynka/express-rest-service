@@ -1,22 +1,25 @@
 version: '3.5'
 services:
-    express:
-        container_name: express
+
+    nestjs:
+        container_name: nestjs
         build:
-            dockerfile: docker/express/Dockerfile
+            dockerfile: docker/nestjs/Dockerfile
             context: .
         depends_on:
             - postgres
         ports:
             - ${PORT}:${PORT}
         volumes:
-            - ${EXPRESS_DIR_SRC}:/usr/app/src
-            - ${EXPRESS_DIR_TEST}:/usr/app/test
-            - ${EXPRESS_DIR_LOGS}:/usr/app/logs
-            - ${EXPRESS_DIR_DOC}:/usr/app/doc
+            - ${NESTJS_DIR_SRC}:/usr/app/src
+            - ${NESTJS_DIR_TEST}:/usr/app/test
+            - ${NESTJS_DIR_LOGS}:/usr/app/logs
+            - ${NESTJS_DIR_DOC}:/usr/app/doc
+            - ${NESTJS_DIR_ENV}:/usr/app/.env
         networks:
             - custom-network
         restart: always
+
     postgres:
         container_name: postgres
         build:
@@ -34,6 +37,7 @@ services:
         restart: always
         volumes:
             - ${PG_DATA}:/var/lib/pg_data
+
 networks:
     custom-network:
         name: custom-network
